@@ -18,162 +18,188 @@
 
 package gov.nasa.jpf;
 
-import gov.nasa.jpf.util.test.TestJPF;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.util.regex.Matcher;
 
-import org.junit.Test;
+import static junitparams.JUnitParamsRunner.$;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
  * unit test for Config
  */
-public class ConfigTest extends TestJPF {
+@RunWith(JUnitParamsRunner.class)
+public class ConfigTest {
+
+  private final String _configTestAppJPF = "configTestApp.jpf";
+
+  private final String _configTestIncludesJPF = "configTestIncludes.jpf";
+
+  private final String _configTestRequiresFailJPF = "configTestRequiresFail.jpf";
+
+  private final String _configTestRequiresJPF = "configTestRequires.jpf";
+
+  private final String _configTestSite = "configTestSite.properties";
+
+  private final String _configurationDirectory = "src/tests/gov/nasa/jpf/";
 
   @Test
-  public void testDefaultAppPropertyInit () {
+  public void dontLoadPropertyWhenRequiredPropertyIsNotSet() {
+    Config conf = givenConfigurationWithPropertiesAndAppProperties(_configTestRequiresFailJPF);
 
-    String dir = "src/tests/gov/nasa/jpf";
-    String[] args = {dir + "/configTestApp.jpf"};
+    String propertyValue = conf.getString("whoa");
 
-    Config conf = new Config(args);
-
-    String val = conf.getString("vm.class");
-    assert "gov.nasa.jpf.vm.SingleProcessVM".equals(val);
-
-    val = conf.getString("target"); // from configTest.jpf
-    assert "urgh.org.MySystemUnderTest".equals(val);
-
-    // that's testing key expansion and the builtin "config_path"
-    val = conf.getString("mySUT.location");
-    
-    assert val != null;
-    
-    if (!File.separator.equals("/"))
-       dir = dir.replaceAll("/", Matcher.quoteReplacement(File.separator));  // On UNIX Config returns / and on Windows Config returns \\
-
-    assert val.endsWith(dir);
+    assertThat(propertyValue).isNull();
   }
 
   @Test
-  public void testDefaultExplicitTargetInit ()  {
-    String[] args = {"urgh.org.MySystemUnderTest"};
+  public void loadCorrectlyWhenRequiredPropertyIsSet() {
+    Config conf = givenConfigurationWithPropertiesAndAppProperties(_configTestRequiresJPF);
 
-    Config conf = new Config( args);
-    String[] freeArgs = conf.getFreeArgs();
-    assertTrue( freeArgs.length == 1);
-    assertTrue( "urgh.org.MySystemUnderTest".equals(freeArgs[0]));
+    String propertyValue = conf.getString("whoa");
+
+    assertThat(propertyValue).isEqualTo("boa");
   }
 
   @Test
-  public void testExplicitLocations () {
-    String dir = "src/tests/gov/nasa/jpf/";
-    String[] args = {"+site=" + dir + "configTestSite.properties",
-                     "+app=" + dir + "configTestApp.jpf" };
+  public void retrievePropertyArrayValues() {
+    String dir = _configurationDirectory;
+    String[] args = { "+site=" + dir + _configTestSite,
+        "+arr=-42,0xff,0" };
 
-    Config conf = new Config( args);
-    conf.printEntries();
-
-    assert "urgh.org.MySystemUnderTest".equals(conf.getString("target"));
-  }
-
-  @Test
-  public void testTargetArgsOverride () {
-
-    String dir = "src/tests/gov/nasa/jpf/";
-    String[] args = { dir + "configTestApp.jpf",
-                      "x", "y"};
-
-    Config conf = new Config(args);
-    conf.printEntries();
-
-    String[] ta = conf.getStringArray("target.args");
-    assert ta != null;
-    assert ta.length == 3;
-    assert "a".equals(ta[0]);
-    assert "b".equals(ta[1]);
-    assert "c".equals(ta[2]);
-    
-    String[] freeArgs = conf.getFreeArgs();
-    assert freeArgs != null;
-    assert freeArgs.length == 2;
-    assert "x".equals(freeArgs[0]);
-    assert "y".equals(freeArgs[1]);
-  }
-
-  @Test
-  public void testClassPaths () {
-    String dir = "src/tests/gov/nasa/jpf/";
-    String[] args = {"+site=" + dir + "configTestSite.properties",
-                     "+app=" + dir + "configTestApp.jpf" };
-
-    Config conf = new Config( args);
-    conf.printEntries();
-
-    // those properties are very weak!
-    String[] bootCpEntries = conf.asStringArray("boot_classpath");
-    assert bootCpEntries.length > 0;
-
-    String[] nativeCpEntries = conf.asStringArray("native_classpath");
-    assert nativeCpEntries.length > 0;
-  }
-
-  @Test
-  public void testRequiresOk () {
-    String dir = "src/tests/gov/nasa/jpf/";
-    String[] args = { "+site=" + dir + "configTestSite.properties",
-                      dir + "configTestRequires.jpf" };
-
-    Config.enableLogging(true);
-    Config conf = new Config( args);
-    String v = conf.getString("whoa");
-    System.out.println("got whoa = " + v);
-    
-    assert (v != null) && v.equals("boa");
-  }
-
-  @Test
-  public void testRequiresFail () {
-    String dir = "src/tests/gov/nasa/jpf/";
-    String[] args = { "+site=" + dir + "configTestSite.properties",
-                      dir + "configTestRequiresFail.jpf" };
-
-    Config.enableLogging(true);
-    Config conf = new Config( args);
-    String v = conf.getString("whoa");
-    System.out.println("got whoa = " + v);
-
-    assert (v == null);
-  }
-
-  @Test
-  public void testIncludes () {
-    String dir = "src/tests/gov/nasa/jpf/";
-    String[] args = { "+site=" + dir + "configTestSite.properties",
-                      dir + "configTestIncludes.jpf" };
-
-    Config.enableLogging(true);
-    Config conf = new Config( args);
-    String v = conf.getString("my.common");
-    System.out.println("got my.common = " + v);
-
-    assert (v != null) && v.equals("whatever");
-  }
-
-  @Test
-  public void testIntArray(){
-    String dir = "src/tests/gov/nasa/jpf/";
-    String[] args = { "+site=" + dir + "configTestSite.properties",
-                      "+arr=-42,0xff,0" };
-
-    Config.enableLogging(true);
-    Config conf = new Config( args);
+    Config conf = givenConfigurationWithArguments(args);
     int[] a = conf.getIntArray("arr");
-    
-    assertTrue(a != null);
-    assertTrue(a.length == 3);
-    assertTrue(a[0] == -42 && a[1] == 0xff && a[2] == 0);
-    
+
+    assertThat(a).containsExactly(-42, 0xff, 0);
+  }
+
+  @Test
+  public void shouldHaveNonEmptyBootClasspath() {
+    String dir = _configurationDirectory;
+    String[] args = { "+site=" + dir + _configTestSite,
+        "+app=" + dir + _configTestAppJPF };
+
+    Config conf = givenConfigurationWithArguments(args);
+    // those properties are very weak!
+    String[] bootClasspath = conf.asStringArray("boot_classpath");
+
+    assertThat(bootClasspath).isNotEmpty();
+  }
+
+  @Test
+  public void shouldHaveNonEmptyNativeClasspath() {
+    String dir = _configurationDirectory;
+    String[] args = { "+site=" + dir + _configTestSite,
+        "+app=" + dir + _configTestAppJPF };
+
+    Config conf = givenConfigurationWithArguments(args);
+    // those properties are very weak!
+    String[] nativeClasspath = conf.asStringArray("native_classpath");
+
+    assertThat(nativeClasspath).isNotEmpty();
+  }
+
+  @Parameters(method = "defaultAppPropertyInit")
+  @TestCaseName(value = "For {0} expected value is {1}")
+  @Test
+  public void shouldInitializaeDefaultProperties(String property, String expectedValue) {
+    Config conf = givenConfigurationWithAppProperties(_configTestAppJPF);
+
+    String propertyValue = conf.getString(property);
+
+    assertThat(propertyValue).isEqualTo(expectedValue);
+  }
+
+  @Test
+  public void shouldExpandPropertyKey() {
+    Config conf = givenConfigurationWithAppProperties(_configTestAppJPF);
+    String expandedKey = "mySUT.location";
+
+    String propertyValue = conf.getString(expandedKey);
+
+    assertThat(propertyValue).endsWith(expectedLocation());
+  }
+
+  @Test
+  public void shouldLoadArgument() {
+    String targetClass = "urgh.org.MySystemUnderTest";
+    String[] args = { targetClass };
+    Config conf = givenConfigurationWithArguments(args);
+
+    String[] freeArgs = conf.getFreeArgs();
+
+    assertThat(freeArgs).containsExactly(targetClass);
+  }
+
+  @Test
+  public void shoulLoadAppPropertiesGivenWithAppKey() {
+    String dir = _configurationDirectory;
+    String[] args = { "+site=" + dir + _configTestSite, "+app=" + dir + _configTestAppJPF };
+
+    Config conf = givenConfigurationWithArguments(args);
+    String target = conf.getString(ConfigConstants.TARGET);
+
+    assertThat(target).isEqualTo("urgh.org.MySystemUnderTest");
+  }
+
+  @Test
+  public void shouldLoadPropertiesFromIncludedFile() {
+    String dir = _configurationDirectory;
+    String[] args = { "+site=" + dir + _configTestSite,
+        dir + _configTestIncludesJPF };
+
+    Config conf = givenConfigurationWithArguments(args);
+    String propertyValue = conf.getString("my.common");
+
+    assertThat(propertyValue).isEqualTo("whatever");
+  }
+
+  @Test
+  public void shouldOverrideTargetArgs() {
+
+    String dir = _configurationDirectory;
+    String[] args = { dir + _configTestAppJPF, "x", "y" };
+
+    Config conf = givenConfigurationWithArguments(args);
+    String[] targetArgs = conf.getStringArray(ConfigConstants.TARGET_ARGS);
+    String[] freeArgs = conf.getFreeArgs();
+
+    assertThat(targetArgs).containsExactly("a", "b", "c");
+    assertThat(freeArgs).containsExactly("x","y");
+  }
+
+  private Object defaultAppPropertyInit() {
+    return $(
+        $(ConfigConstants.VM_CLASS, "gov.nasa.jpf.vm.SingleProcessVM"),
+        $(ConfigConstants.TARGET, "urgh.org.MySystemUnderTest")
+    );
+  }
+
+  private String expectedLocation() {
+    String configurationDirectory = _configurationDirectory.substring(0, _configurationDirectory.length() - 1);
+    if (!File.separator.equals("/")) {
+      configurationDirectory = configurationDirectory
+          .replaceAll("/", Matcher.quoteReplacement(File.separator));  // On UNIX Config returns / and on Windows Config returns \\
+    }
+    return configurationDirectory;
+  }
+
+  private Config givenConfigurationWithAppProperties(String configurationName) {
+    return givenConfigurationWithArguments(new String[] { _configurationDirectory + configurationName });
+  }
+
+  private Config givenConfigurationWithArguments(final String[] args) {
+    return new Config(args);
+  }
+
+  private Config givenConfigurationWithPropertiesAndAppProperties(String configurationName) {
+    String[] args = { "+site=" + _configurationDirectory + _configTestSite, _configurationDirectory + configurationName };
+    return givenConfigurationWithArguments(args);
   }
 }

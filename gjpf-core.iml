@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/build/classes/main" />
     <output-test url="file://$MODULE_DIR$/build/tests" />
+    <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
@@ -19,8 +20,6 @@
     <orderEntry type="module" module-name="classes" />
     <orderEntry type="module" module-name="main" />
     <orderEntry type="module" module-name="peers" scope="TEST" />
-    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="Gradle: RunJPF">
         <CLASSES>
@@ -43,6 +42,28 @@
       <library name="Gradle: _media_data_programowanie_jpf_git_gjpf_core_bin:">
         <CLASSES>
           <root url="file://$MODULE_DIR$/bin" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.assertj:assertj-core:3.2.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: pl.pragmatists:JUnitParams:1.0.4" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: RunJPF">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/build/RunJPF.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: RunTest">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/build/RunTest.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
