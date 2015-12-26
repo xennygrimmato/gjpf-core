@@ -18,21 +18,68 @@
 
 package gov.nasa.jpf.jvm;
 
-import gov.nasa.jpf.util.test.TestJPF;
 import gov.nasa.jpf.vm.ClassInfo;
 import gov.nasa.jpf.vm.ClassParseException;
 import gov.nasa.jpf.vm.FieldInfo;
 import gov.nasa.jpf.vm.MethodInfo;
-
+import org.assertj.core.api.JUnitSoftAssertions;
+import org.junit.Rule;
+import org.junit.Test;
 
 import java.io.File;
-
-import org.junit.Test;
 
 /**
  * unit test for ClassInfo initialization
  */
-public class ClassInfoTest extends TestJPF {
+public class ClassInfoTest {
+
+  @Rule
+  public final JUnitSoftAssertions softly = new JUnitSoftAssertions();
+
+  private final String CLASS_NAME = "gov.nasa.jpf.jvm.ClassInfoTest$MyClass";
+
+  @Test
+  public void shouldInitializeExampleClassProperly()
+      throws ClassParseException {
+    File exampleClass = givenExampleClass();
+
+    ClassInfo classInfo = whenInitializeClass(exampleClass);
+
+    softly.assertThat(classInfo.getName()).isEqualTo(CLASS_NAME);
+    assertDeclaredInstanceFields(classInfo);
+    assertDeclaredStaticFields(classInfo);
+    assertDelcaredMethods(classInfo);
+  }
+
+  private void assertDelcaredMethods(final ClassInfo classInfo) {
+    softly.assertThat(classInfo.getDeclaredMethodInfos()).extracting("uniqueName").containsExactly(
+        "<init>(Ljava/lang/String;)V",
+        "whatIsIt()I",
+        "isItTheAnswer(ZILjava/lang/String;)Z",
+        "foo()V",
+        "getString()Ljava/lang/String;"
+    );
+  }
+
+  private void assertDeclaredStaticFields(final ClassInfo classInfo) {
+    softly.assertThat(classInfo.getDeclaredStaticFields()).extracting("type").containsExactly("int");
+    softly.assertThat(classInfo.getDeclaredStaticFields()).extracting("name").containsExactly("D");
+  }
+
+  private void assertDeclaredInstanceFields(final ClassInfo classInfo) {
+    softly.assertThat(classInfo.getDeclaredInstanceFields()).extracting("type").containsExactly("java.lang.String");
+    softly.assertThat(classInfo.getDeclaredInstanceFields()).extracting("name").containsExactly("s");
+  }
+
+  private File givenExampleClass()
+      throws ClassParseException {
+    return new File("build/tests/gov/nasa/jpf/jvm/ClassInfoTest$MyClass.class");
+  }
+
+  private ClassInfo whenInitializeClass(File file)
+      throws ClassParseException {
+    return new NonResolvedClassInfo("gov.nasa.jpf.jvm.ClassInfoTest$MyClass", file);
+  }
 
   @interface X {
     String value() default "nothing";
@@ -43,10 +90,12 @@ public class ClassInfoTest extends TestJPF {
   }
 
   @X
-  public static class MyClass implements Cloneable {
+  public static class MyClass
+      implements Cloneable {
     public static final int D = 42;
 
-    @X("data") String s;
+    @X("data")
+    String s;
 
     public MyClass(String s) {
       this.s = s;
@@ -72,14 +121,17 @@ public class ClassInfoTest extends TestJPF {
       return d;
     }
 
-    public boolean isItTheAnswer (boolean b, @X @Y({1,2,3}) int d, String s){
-      switch (d){
-        case 42: return true;
-        default: return false;
+    public boolean isItTheAnswer(boolean b, @X @Y({ 1, 2, 3 }) int d, String s) {
+      switch (d) {
+        case 42:
+          return true;
+        default:
+          return false;
       }
     }
 
-    protected void foo() throws IndexOutOfBoundsException {
+    protected void foo()
+        throws IndexOutOfBoundsException {
       @X int d = D;
 
       Object[] a = new Object[2];
@@ -88,10 +140,10 @@ public class ClassInfoTest extends TestJPF {
 
       String x = (String)a[0];
       Object o = a;
-      if (o instanceof Object[]){
+      if (o instanceof Object[]) {
         o = x;
       }
-      if (o instanceof String){
+      if (o instanceof String) {
         o = null;
       }
 
@@ -108,38 +160,6 @@ public class ClassInfoTest extends TestJPF {
     @X
     String getString() {
       return s;
-    }
-  }
-
-  @Test
-  public void testClassFileInitialization() {
-    File file = new File("build/tests/gov/nasa/jpf/jvm/ClassInfoTest$MyClass.class");
-
-    try {
-      ClassInfo ci = new NonResolvedClassInfo( "gov.nasa.jpf.jvm.ClassInfoTest$MyClass", file);
-
-      assert ci.getName().equals("gov.nasa.jpf.jvm.ClassInfoTest$MyClass");
-
-      System.out.println("-- declared instance fields");
-      for (FieldInfo fi : ci.getDeclaredInstanceFields()){
-        System.out.print(fi.getType());
-        System.out.print(' ');
-        System.out.println(fi.getName());
-      }
-
-      assert ci.getNumberOfDeclaredInstanceFields() == 1;
-      assert ci.getNumberOfStaticFields() == 1;
-
-      System.out.println();
-      System.out.println("-- methods");
-      for (MethodInfo mi : ci){
-        System.out.println(mi.getUniqueName());
-      }
-
-
-    } catch (ClassParseException cfx){
-      //cfx.printStackTrace();
-      fail("ClassParseException: " + cfx);
     }
   }
 
