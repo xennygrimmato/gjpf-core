@@ -18,36 +18,34 @@
 
 package gov.nasa.jpf.vm;
 
-import gov.nasa.jpf.util.test.TestJPF;
-import gov.nasa.jpf.vm.Types;
-
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static junitparams.JUnitParamsRunner.$;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * unit tests for gov.nasa.jpf.vm.Types
  */
-public class TypesTest extends TestJPF {
+@RunWith(JUnitParamsRunner.class)
+public class TypesTest {
 
-  @Test public void testGetSignatureName () {
-    
-    String in  = "int foo(int,java.lang.String)";
-    String out = "foo(ILjava/lang/String;)I";    
-    String s = Types.getSignatureName(in);
-    System.out.println( in + " => " + s);
-    assert out.equals(s);
+  @Test
+  @Parameters(method = "signatures")
+  @TestCaseName( value = "Signature for {0} is {1}")
+  public void shouldGetExpectedSignatureForGivenMethodDeclaration(String methodDeclaration, String expectedSignature){
+    assertThat(Types.getSignatureName(methodDeclaration)).isEqualTo(expectedSignature);
+  }
 
-    in  = "double[] what_ever (char[], X )";
-    out = "what_ever([CLX;)[D";
-    s = Types.getSignatureName(in);
-    System.out.println( in + " => " + s);
-    assert out.equals(s);
-
-    in  = "bar()";
-    out = "bar()";
-    s = Types.getSignatureName(in);
-    System.out.println( in + " => " + s);
-    assert out.equals(s);
-
+  private Object signatures(){
+    return $(
+        $("int foo(int,java.lang.String)", "foo(ILjava/lang/String;)I"),
+        $("double[] what_ever (char[], X )", "what_ever([CLX;)[D"),
+        $("bar()", "bar()")
+    );
   }
 
   //... and many more to come

@@ -84,11 +84,11 @@ public class JVMStackFrame
    */
   protected void setCallArguments(ThreadInfo threadInfo){
     StackFrame caller = threadInfo.getTopFrame();
-    MethodInfo miCallee = mi;
+    MethodInfo miCallee = methodInfo;
     int argumentsSize = miCallee.getArgumentsSize();
     if (argumentsSize > 0) {
       int[] calleeSlots = slots;
-      FixedBitSet calleeRefs = isRef;
+      FixedBitSet calleeRefs = isReferenced;
       int[] callerSlots = caller.getSlots();
       FixedBitSet callerRefs = caller.getReferenceMap();
       for (int i = 0, j = caller.getTopPos() - argumentsSize + 1; i < argumentsSize; i++, j++) {

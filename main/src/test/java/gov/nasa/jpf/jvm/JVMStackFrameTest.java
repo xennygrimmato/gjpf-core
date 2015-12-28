@@ -38,6 +38,16 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
  */
 public class JVMStackFrameTest {
 
+  @Test
+  public void shouldCreateStackWithSlotsBigEnoughForLocalVariableAndOperands()
+  {
+    int locals = 4;
+    int operands = 3;
+    JVMStackFrame frame = new JVMStackFrame(locals, operands);
+
+    assertThat(frame.getSlots()).hasSize(locals + operands);
+  }
+
   @RunWith(PowerMockRunner.class)
   @PrepareForTest(VM.class)
   public static class SetExceptionReferenceTest {

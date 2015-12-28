@@ -9,22 +9,143 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StackFrameTest {
+  private StackFrame _frame;
 
+  @Test
+  public void cloneShouldReturnDeepCopyOfStack(){
+    givenStackWithThreeValuesAndAttributes(_frame);
+
+    StackFrame clone = _frame.clone();
+
+    assertThat(clone).isEqualToComparingFieldByField(_frame);
+  }
+
+  @Before
+  public void setup(){
+    _frame = new StackFrameForTest(0, 10);
+  }
+
+  @Test
+  public void shouldReplaceOperandAttributeAtGivenPosition(){
+    givenStackWithThreeValuesAndAttributes(_frame);
+
+    _frame.replaceOperandAttr(0, "3", "1");
+
+    assertThat(_frame.getOperandAttr(0)).isEqualTo("1");
+  }
+
+  @Test
+  public void shouldNotReplaceOperandAttributeAtGivenPositionWhenOldValueDoesNotMatch(){
+    givenStackWithThreeValuesAndAttributes(_frame);
+    String originalValue = "3";
+    String newAttribute = "1";
+    String incorrectOldAttribute = "2";
+
+    _frame.replaceOperandAttr(0, incorrectOldAttribute, newAttribute);
+
+    assertThat(_frame.getOperandAttr(0)).isEqualTo(originalValue);
+  }
+
+  @Test
+  public void shouldReturnNullWhenOperandAttributeDoesNotExist(){
+    givenStackWithThreeValues(_frame);
+
+    Object operandAttr = _frame.getOperandAttr(0);
+
+    assertThat(operandAttr).isNull();
+  }
+
+  @Test
+  public void shouldReturnNullWhenOperandAttributeOfClassDoesNotExist(){
+    givenStackWithThreeValues(_frame);
+
+    Object operandAttr = _frame.getOperandAttr(0, String.class);
+
+    assertThat(operandAttr).isNull();
+  }
+
+  @Test
+  public void shouldReturnNullWhenOperandAttributeOfClassIsAnotherClass(){
+    givenStackWithThreeValues(_frame);
+
+    Object operandAttr = _frame.getOperandAttr(0, Integer.class);
+
+    assertThat(operandAttr).isNull();
+  }
+
+  @Test
+  public void shouldReturnOperandAttributeOfClassWhenExist(){
+    givenStackWithThreeValuesAndAttributes(_frame);
+
+    Object operandAttr = _frame.getOperandAttr(0, String.class);
+
+    assertThat(operandAttr).isEqualTo("3");
+  }
+
+  @Test
+  public void shouldReturnOperandAttributeWhenExist(){
+    givenStackWithThreeValuesAndAttributes(_frame);
+
+    Object operandAttr = _frame.getOperandAttr(0);
+
+    assertThat(operandAttr).isEqualTo("3");
+  }
+
+  static void assertGivenStackValues(Object[][] values, final JUnitSoftAssertions softly, final StackFrame frame){
+    for (Object[] stackValues : values) {
+      int position = (int)stackValues[0];
+      int value = (int)stackValues[1];
+      assertThatValueAtPositionIsEqual(position, value, softly, frame);
+    }
+  }
+
+  static void assertGivenStackValuesWithAttributes(Object[][] values, final JUnitSoftAssertions softly, final StackFrame frame){
+    for (Object[] stackValues : values) {
+      int position = (int)stackValues[0];
+      int value = (int)stackValues[1];
+      String attribute = (String)stackValues[2];
+      assertThatValueAtPositionHave(position, value, attribute, softly, frame);
+    }
+  }
+
+  static void assertThatValueAtPositionHave(int position, int value, String attribute, final JUnitSoftAssertions softly, final StackFrame frame){
+    assertThatValueAtPositionIsEqual(position, value, softly, frame);
+    softly.assertThat(frame.getOperandAttr(position)).isEqualTo(attribute); // same const pool string
+  }
+
+  static void assertThatValueAtPositionIsEqual(int position, int value, final JUnitSoftAssertions softly, final StackFrame frame){
+    softly.assertThat(frame.peek(position)).isEqualTo(value);
+  }
+
+  static void givenStackWithThreeValues(final StackFrame frame){
+    frame.push(1);
+    frame.push(2);
+    frame.push(3);
+  }
+
+  static void givenStackWithThreeValuesAndAttributes(final StackFrame frame){
+    frame.push(1);
+    frame.setOperandAttr("1");
+    frame.push(2);
+    frame.setOperandAttr("2");
+    frame.push(3);
+    frame.setOperandAttr("3");
+  }
 
   public static class Dup2_x1Test {
     @Rule
-    public final JUnitSoftAssertions softly = new JUnitSoftAssertions();
+    public final JUnitSoftAssertions _softly = new JUnitSoftAssertions();
 
     private StackFrame _frame;
 
     @Before
-    public void setup() {
+    public void setup(){
       _frame = new StackFrameForTest(0, 10);
     }
 
     @Test
     @Ignore(value = "Github issue #11")
-    public void shouldDuplicateTopOperandValueAndInsertTwoValuesDown() {
+    public void shouldDuplicateTopOperandValueAndInsertTwoValuesDown(){
       givenStackWithTwoValues();
 
       _frame.dup2_x1();
@@ -34,9 +155,9 @@ public class StackFrameTest {
     }
 
     @Test
-    public void shouldDuplicateTwoTopOperandValuesAndInsertThreeValuesDown() {
+    public void shouldDuplicateTwoTopOperandValuesAndInsertThreeValuesDown(){
       // 1 2 3  => 2 3.1 2 3
-      givenStackWithThreeValues();
+      givenStackWithThreeValues(_frame);
 
       _frame.dup2_x1();
 
@@ -45,9 +166,9 @@ public class StackFrameTest {
     }
 
     @Test
-    public void shouldDuplicateTwoTopOperandValuesWithAttributesAndInsertThreeValuesDown() {
+    public void shouldDuplicateTwoTopOperandValuesWithAttributesAndInsertThreeValuesDown(){
       // 1 2 3  => 2 3.1 2 3
-      givenStackWithThreeValuesAndAttributes();
+      givenStackWithThreeValuesAndAttributes(_frame);
 
       _frame.dup2_x1();
 
@@ -55,7 +176,7 @@ public class StackFrameTest {
       assertThatFiveValuesOnStackWithAttributesInRightOrder();
     }
 
-    private void assertFiveValuesOnStackInRightOrder() {
+    private void assertFiveValuesOnStackInRightOrder(){
       assertGivenStackValues(new Object[][]
           {// position | value
               { 4, 2 },
@@ -63,27 +184,10 @@ public class StackFrameTest {
               { 2, 1 },
               { 1, 2 },
               { 0, 3 }
-          });
+          }, _softly, _frame);
     }
 
-    private void assertGivenStackValues(Object[][] values) {
-      for (Object[] stackValues : values) {
-        int position = (int)stackValues[0];
-        int value = (int)stackValues[1];
-        assertThatValueAtPositionIsEqual(position, value);
-      }
-    }
-
-    private void assertGivenStackValuesWithAttributes(Object[][] values) {
-      for (Object[] stackValues : values) {
-        int position = (int)stackValues[0];
-        int value = (int)stackValues[1];
-        String attribute = (String)stackValues[2];
-        assertThatValueAtPositionHave(position, value, attribute);
-      }
-    }
-
-    private void assertThatFiveValuesOnStackWithAttributesInRightOrder() {
+    private void assertThatFiveValuesOnStackWithAttributesInRightOrder(){
       assertGivenStackValuesWithAttributes(new Object[][]
           {// position | value | attribute
               { 4, 2, "2" },
@@ -91,49 +195,28 @@ public class StackFrameTest {
               { 2, 1, "1" },
               { 1, 2, "2" },
               { 0, 3, "3" }
-          }
+          }, _softly, _frame
       );
     }
 
-    private void assertThatStackHaveFiveValues() {
-      softly.assertThat(_frame.getTopPos()).isEqualTo(4);
+    private void assertThatStackHaveFiveValues(){
+      _softly.assertThat(_frame.getTopPos()).isEqualTo(4);
     }
 
-    private void assertThatStackHaveThreeValues() {
-      softly.assertThat(_frame.getTopPos()).isEqualTo(2);
+    private void assertThatStackHaveThreeValues(){
+      _softly.assertThat(_frame.getTopPos()).isEqualTo(2);
     }
 
-    private void assertThatValueAtPositionHave(int position, int value, String attribute) {
-      softly.assertThat(_frame.peek(position)).isEqualTo(value);
-      softly.assertThat(_frame.getOperandAttr(position)).isEqualTo(attribute); // same const pool string
+    private void assertThreeValuesOnStackInRightOrder(){
+      assertGivenStackValues(new Object[][]
+          {// position | value
+              { 2, 1 },
+              { 1, 2 },
+              { 0, 1 }
+          }, _softly, _frame);
     }
 
-    private void assertThatValueAtPositionIsEqual(int position, int value) {
-      softly.assertThat(_frame.peek(position)).isEqualTo(value);
-    }
-
-    private void assertThreeValuesOnStackInRightOrder() {
-      assertThatValueAtPositionIsEqual(2, 1);
-      assertThatValueAtPositionIsEqual(1, 2);
-      assertThatValueAtPositionIsEqual(0, 1);
-    }
-
-    private void givenStackWithThreeValues() {
-      _frame.push(1);
-      _frame.push(2);
-      _frame.push(3);
-    }
-
-    private void givenStackWithThreeValuesAndAttributes() {
-      _frame.push(1);
-      _frame.setOperandAttr("1");
-      _frame.push(2);
-      _frame.setOperandAttr("2");
-      _frame.push(3);
-      _frame.setOperandAttr("3");
-    }
-
-    private void givenStackWithTwoValues() {
+    private void givenStackWithTwoValues(){
       _frame.push(1);
       _frame.push(2);
     }
@@ -141,47 +224,74 @@ public class StackFrameTest {
 
   public static class Dup2_x2Test {
 
+    @Rule
+    public final JUnitSoftAssertions _softly = new JUnitSoftAssertions();
+
     private StackFrame _frame;
 
     @Before
-    public void setup() {
+    public void setup(){
       _frame = new StackFrameForTest(0, 10);
     }
 
     @Test
-    public void testDup2_x2() {
+    public void shouldDuplicateTwoTopOperandValuesAndInsertFourValuesDown(){
       // 1 2 3 4  => 3 4.1 2 3 4
       givenStackWithFourValues();
 
       _frame.dup2_x2();
 
-      assert _frame.getTopPos() == 5;
-      assert _frame.peek(5) == 3;
-      assert _frame.peek(4) == 4;
-      assert _frame.peek(3) == 1;
-      assert _frame.peek(2) == 2;
-      assert _frame.peek(1) == 3;
-      assert _frame.peek(0) == 4;
+      assertThatStackHaveSixValues();
+      assertThatSixValuesOnStackInRightOrder();
     }
 
     @Test
-    public void testDup2_x2_Attrs() {
+    public void shouldDuplicateTwoTopOperandValuesWithAttributesAndInsertFourValuesDown(){
       // 1 2 3 4  => 3 4.1 2 3 4
       givenStackWithFourValuesAndAttributes();
 
       _frame.dup2_x2();
-      _frame.printOperands(System.out);
 
-      assert _frame.getTopPos() == 5;
-      assert _frame.peek(5) == 3 && _frame.getOperandAttr(5) == "3";  // same const pool string
-      assert _frame.peek(4) == 4 && _frame.getOperandAttr(4) == "4";
-      assert _frame.peek(3) == 1 && _frame.getOperandAttr(3) == "1";
-      assert _frame.peek(2) == 2 && _frame.getOperandAttr(2) == "2";
-      assert _frame.peek(1) == 3 && _frame.getOperandAttr(1) == "3";
-      assert _frame.peek(0) == 4 && _frame.getOperandAttr(0) == "4";
+      assertThatStackHaveSixValues();
+      assertStackHaveSixValuesWithAttributesInRightOrder();
     }
 
-    private void givenStackWithFourValuesAndAttributes() {
+    private void assertStackHaveSixValuesWithAttributesInRightOrder(){
+      assertGivenStackValuesWithAttributes(new Object[][]
+          {
+              { 5, 3, "3" },
+              { 4, 4, "4" },
+              { 3, 1, "1" },
+              { 2, 2, "2" },
+              { 1, 3, "3" },
+              { 0, 4, "4" }
+          }, _softly, _frame);
+    }
+
+    private void assertThatSixValuesOnStackInRightOrder(){
+      assertGivenStackValues(new Object[][]
+          {// position | value
+              { 5, 3 },
+              { 4, 4 },
+              { 3, 1 },
+              { 2, 2 },
+              { 1, 3 },
+              { 0, 4 }
+          }, _softly, _frame);
+    }
+
+    private void assertThatStackHaveSixValues(){
+      assert _frame.getTopPos() == 5;
+    }
+
+    private void givenStackWithFourValues(){
+      _frame.push(1);
+      _frame.push(2);
+      _frame.push(3);
+      _frame.push(4);
+    }
+
+    private void givenStackWithFourValuesAndAttributes(){
       _frame.push(1);
       _frame.setOperandAttr("1");
       _frame.push(2);
@@ -191,104 +301,33 @@ public class StackFrameTest {
       _frame.push(4);
       _frame.setOperandAttr("4");
     }
-
-    private void givenStackWithFourValues() {
-      _frame.push(1);
-      _frame.push(2);
-      _frame.push(3);
-      _frame.push(4);
-    }
-  }
-
-  public static class PushPopDoubleTest {
-    @Rule
-    public final JUnitSoftAssertions softly = new JUnitSoftAssertions();
-
-    private final double _value = Math.PI;
-
-    private StackFrame _frame = new StackFrameForTest(2, 10);
-
-    @Test
-    public void shouldGetLocalValueObjectAfterPushDouble() {
-      givenStackWithThreeLocalValues();
-      _frame.pushDouble(_value);
-
-      Object obj_Double = _frame.getLocalValueObject(new LocalVarInfo("testDouble", "D", "D", 0, 0, _frame.getTopPos() - 1));
-
-      softly.assertThat(obj_Double).isInstanceOf(Double.class);
-      softly.assertThat((Double)obj_Double).isEqualTo(_value);
-    }
-
-    @Test
-    public void shouldPushAndPopTheSameDoubleValue() {
-      // Push/Pop double value and also  JVMStackFrame.getLocalValueObject
-      givenStackWithThreeLocalValues();
-      _frame.pushDouble(_value);
-
-      final double result_popLong = _frame.popDouble();
-
-      softly.assertThat(result_popLong).isEqualTo(_value);
-      assertRestOfStackIsTheSame();
-    }
-
-    private void assertRestOfStackIsTheSame() {
-      softly.assertThat(_frame.peek(0)).isEqualTo(3);
-      softly.assertThat(_frame.peek(1)).isEqualTo(2);
-      softly.assertThat(_frame.peek(2)).isEqualTo(1);
-    }
-
-    private void givenStackWithThreeLocalValues() {
-      _frame.push(1);
-      _frame.push(2);
-      _frame.push(3);
-    }
-  }
-
-  public static class PushPopLongTest {
-    private final long _long = 0x123456780ABCDEFL;
-
-    private StackFrame _frame = new StackFrameForTest(0, 2);
-
-    @Test
-    public void shouldGetLocalValueObjectAfterPushLong() {
-      _frame.pushLong(_long);
-
-      Object obj_Long = _frame.getLocalValueObject(new LocalVarInfo("testLong", "J", "J", 0, 0, 0));
-
-      assertThat(obj_Long).isInstanceOf(Long.class);
-      assertThat((Long)obj_Long).isEqualTo(_long);
-    }
-
-    @Test
-    public void shouldPushAndPopTheSameLongValue() {
-      _frame.pushLong(_long);
-
-      long result_popLong = _frame.popLong();
-
-      assertThat(result_popLong).isEqualTo(_long);
-    }
   }
 
   static final class StackFrameForTest
       extends StackFrame {
 
-    StackFrameForTest(final int i, final int i1) {
-      super(i, i1);
+    StackFrameForTest(final int locals, final int operands){
+      super(locals, operands);
     }
 
     @Override
-    public void setArgumentLocal(final int idx, final int value, final Object attr) {
-
+    public StackFrame clone(){
+      throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setLongArgumentLocal(final int idx, final long value, final Object attr) {
-
+    public void setArgumentLocal(final int idx, final int value, final Object attr){
+      //test dummy
     }
 
     @Override
-    public void setReferenceArgumentLocal(final int idx, final int ref, final Object attr) {
+    public void setLongArgumentLocal(final int idx, final long value, final Object attr){
+      //test dummy
+    }
 
+    @Override
+    public void setReferenceArgumentLocal(final int idx, final int ref, final Object attr){
+      //test dummy
     }
   }
 }
