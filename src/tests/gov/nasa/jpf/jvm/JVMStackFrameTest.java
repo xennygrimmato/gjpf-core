@@ -18,156 +18,75 @@
 
 package gov.nasa.jpf.jvm;
 
-import gov.nasa.jpf.util.test.TestJPF;
-import gov.nasa.jpf.vm.LocalVarInfo;
+import gov.nasa.jpf.vm.SystemState;
+import gov.nasa.jpf.vm.VM;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 
 /**
  * unit test for StackFrame operations
  */
-public class JVMStackFrameTest extends TestJPF {
+public class JVMStackFrameTest {
 
-  @Test
-  public void testDup2_x1() {
-    // 1 2 3  => 2 3.1 2 3
+  @RunWith(PowerMockRunner.class)
+  @PrepareForTest(VM.class)
+  public static class SetExceptionReferenceTest {
 
-    JVMStackFrame frame = new JVMStackFrame(0, 10);
+    private final int _exceptionReference = 1;
 
-    frame.push(1);
-    frame.push(2);
-    frame.push(3);
-    frame.printOperands(System.out);
+    @Mock
+    private SystemState _systemState;
 
-    frame.dup2_x1();
-    frame.printOperands(System.out);
+    @Mock
+    private VM _vm;
 
-    assert frame.getTopPos() == 4;
-    assert frame.peek(4) == 2;
-    assert frame.peek(3) == 3;
-    assert frame.peek(2) == 1;
-    assert frame.peek(1) == 2;
-    assert frame.peek(0) == 3;
-  }
+    private JVMStackFrame jvmStackFrame = new JVMStackFrame(0, 10);
 
-  @Test
-  public void testDup2_x1_Attrs() {
-    // 1 2 3  => 2 3.1 2 3
+    @Before
+    public void setUp() {
+      MockitoAnnotations.initMocks(this);
+    }
 
-    JVMStackFrame frame = new JVMStackFrame(0, 10);
+    @Test
+    public void shouldClearOperandStack() {
+      setupVMClass();
+      givenNonEmptyStackFrame();
 
-    frame.push(1); frame.setOperandAttr("1");
-    frame.push(2); frame.setOperandAttr("2");
-    frame.push(3); frame.setOperandAttr("3");
-    frame.printOperands(System.out);
+      jvmStackFrame.setExceptionReference(_exceptionReference);
 
-    frame.dup2_x1();
-    frame.printOperands(System.out);
+      assertThat(jvmStackFrame.getSlotAttr(0)).isNull();
+    }
 
-    assert frame.getTopPos() == 4;
-    assert frame.peek(4) == 2 && frame.getOperandAttr(4) == "2"; // same const pool string
-    assert frame.peek(3) == 3 && frame.getOperandAttr(3) == "3";
-    assert frame.peek(2) == 1 && frame.getOperandAttr(2) == "1";
-    assert frame.peek(1) == 2 && frame.getOperandAttr(1) == "2";
-    assert frame.peek(0) == 3 && frame.getOperandAttr(0) == "3";
-  }
+    @Test
+    public void shouldPutExceptionReferenceOnStack() {
+      setupVMClass();
+      givenNonEmptyStackFrame();
 
+      jvmStackFrame.setExceptionReference(_exceptionReference);
 
-  @Test
-  public void testDup2_x2() {
-    // 1 2 3 4  => 3 4.1 2 3 4
+      assertThat(jvmStackFrame.getSlot(0)).isEqualTo(_exceptionReference);
+    }
 
-    JVMStackFrame frame = new JVMStackFrame(0, 10);
+    private void givenNonEmptyStackFrame() {
+      jvmStackFrame.push(10);
+      jvmStackFrame.setOperandAttr(new Object());
+    }
 
-    frame.push(1);
-    frame.push(2);
-    frame.push(3);
-    frame.push(4);
-    frame.printOperands(System.out);
-
-    frame.dup2_x2();
-    frame.printOperands(System.out);
-
-    assert frame.getTopPos() == 5;
-    assert frame.peek(5) == 3;
-    assert frame.peek(4) == 4;
-    assert frame.peek(3) == 1;
-    assert frame.peek(2) == 2;
-    assert frame.peek(1) == 3;
-    assert frame.peek(0) == 4;
-  }
-
-  @Test
-  public void testDup2_x2_Attrs() {
-    // 1 2 3 4  => 3 4.1 2 3 4
-
-    JVMStackFrame frame = new JVMStackFrame(0, 10);
-
-    frame.push(1); frame.setOperandAttr("1");
-    frame.push(2); frame.setOperandAttr("2");
-    frame.push(3); frame.setOperandAttr("3");
-    frame.push(4); frame.setOperandAttr("4");
-    frame.printOperands(System.out);
-
-    frame.dup2_x2();
-    frame.printOperands(System.out);
-
-    assert frame.getTopPos() == 5;
-    assert frame.peek(5) == 3 && frame.getOperandAttr(5) == "3";  // same const pool string
-    assert frame.peek(4) == 4 && frame.getOperandAttr(4) == "4";
-    assert frame.peek(3) == 1 && frame.getOperandAttr(3) == "1";
-    assert frame.peek(2) == 2 && frame.getOperandAttr(2) == "2";
-    assert frame.peek(1) == 3 && frame.getOperandAttr(1) == "3";
-    assert frame.peek(0) == 4 && frame.getOperandAttr(0) == "4";
-  }
-
-  @Test
-  public void testPushLong() {
-    // Push/Pop long value and also  JVMStackFrame.getLocalValueObject
-
-    JVMStackFrame frame = new JVMStackFrame(0, 2);
-
-    long value = 0x123456780ABCDEFL;
-    frame.pushLong(value);
-
-    Object obj_Long = frame.getLocalValueObject(new LocalVarInfo("testLong", "J", "J", 0, 0, 0));
-    assert obj_Long != null;
-    assert obj_Long instanceof Long;
-
-    long result_getLocValObj = (Long) obj_Long;
-    long result_popLong = frame.popLong();
-
-    assert result_getLocValObj == value;
-    assert result_popLong == value;
-  }
-
-  @Test
-  public void testPushDouble() {
-    // Push/Pop double value and also  JVMStackFrame.getLocalValueObject
-
-    JVMStackFrame frame = new JVMStackFrame(2, 10);
-    // Initialize local values and the stack frame
-    frame.push(1);
-    frame.push(2);
-    frame.push(3);
-
-    double value = Math.PI;
-
-    frame.pushDouble(value);
-
-    Object obj_Double = frame.getLocalValueObject(new LocalVarInfo("testDouble", "D", "D", 0, 0, frame.getTopPos() - 1));
-    assert obj_Double != null;
-    assert obj_Double instanceof Double;
-
-    double result_getLocValObj = (Double) obj_Double;
-    double result_popLong = frame.popDouble();
-
-    assert result_getLocValObj == value;
-    assert result_popLong == value;
-
-    assert frame.peek(0) == 3;
-    assert frame.peek(1) == 2;
-    assert frame.peek(2) == 1;
+    private void setupVMClass() {
+      mockStatic(VM.class);
+      given(VM.getVM()).willReturn(_vm);
+      given(_vm.getSystemState()).willReturn(_systemState);
+    }
   }
 
 }

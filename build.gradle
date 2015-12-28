@@ -14,6 +14,10 @@ allprojects {
         testCompile 'junit:junit:4.12'
         testCompile 'org.assertj:assertj-core:3.2.0'
         testCompile 'pl.pragmatists:JUnitParams:1.0.4'
+        testCompile 'org.powermock:powermock-api-mockito:1.6.4'
+        testCompile 'org.mockito:mockito-all:1.10.19'
+        testCompile 'org.powermock:powermock-core:1.6.4'
+        testCompile 'org.powermock:powermock-module-junit4:1.6.4'
     }
 
     group = 'gov.nasa.jpf.jpf-core'
