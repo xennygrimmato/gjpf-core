@@ -311,11 +311,6 @@ public class StackFrameTest {
     }
 
     @Override
-    public StackFrame clone(){
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void setArgumentLocal(final int idx, final int value, final Object attr){
       //test dummy
     }
