@@ -24,9 +24,26 @@ subprojects {
     apply plugin: 'maven'
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+        classpath 'org.sonarqube.gradle:gradle-sonarqube-plugin:1.0'
+    }
+}
+
 apply plugin: 'distribution'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'org.sonarqube'
+apply from: 'quality.gradle'
+
 configurations {
     examplesClasspath.extendsFrom compile
     testClasspath.extendsFrom compile, testCompile
@@ -49,16 +66,6 @@ configurations {
     }
 
     distArchives
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
-    }
 }
 
 dependencies {
@@ -301,16 +308,3 @@ distTar {
 
 installDist.dependsOn distZip
 installDist.dependsOn distTar
-
-coveralls {
-    sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten()
-    jacocoReportPath = "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-}
-
-tasks.coveralls {
-    group = 'Coverage reports'
-    description = 'Uploads the aggregated coverage report to Coveralls'
-
-    dependsOn jacocoTestReport
-    onlyIf { System.env.'CI' }
-} 
