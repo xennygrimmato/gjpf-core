@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2014, United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
@@ -75,103 +76,87 @@ public class BitSet1024 extends AbstractFixedBitSet {
   @Override
   public void set (int i){
     if ((i & INDEX_MASK) == 0) {
-      long bitPattern = (1L << i);
 
       switch (i >> 6) {
         case 0:
           if ((l0 & bitPattern) == 0L) {
             cardinality++;
-            l0 |= bitPattern;
           }
           break;
         case 1:
           if ((l1 & bitPattern) == 0L) {
             cardinality++;
-            l1 |= bitPattern;
           }
           break;
         case 2:
           if ((l2 & bitPattern) == 0L) {
             cardinality++;
-            l2 |= bitPattern;
           }
           break;
         case 3:
           if ((l3 & bitPattern) == 0L) {
             cardinality++;
-            l3 |= bitPattern;
           }
           break;
         case 4:
             if ((l4 & bitPattern) == 0L) {
               cardinality++;
-              l4 |= bitPattern;
             }
             break;
         case 5:
             if ((l5 & bitPattern) == 0L) {
               cardinality++;
-              l5 |= bitPattern;
             }
             break;
         case 6:
             if ((l6 & bitPattern) == 0L) {
               cardinality++;
-              l6 |= bitPattern;
             }
             break;
         case 7:
             if ((l7 & bitPattern) == 0L) {
               cardinality++;
-              l7 |= bitPattern;
             }
             break;
         case 8:
             if ((l8 & bitPattern) == 0L) {
               cardinality++;
-              l8 |= bitPattern;
             }
             break;
         case 9:
             if ((l9 & bitPattern) == 0L) {
               cardinality++;
-              l9 |= bitPattern;
             }
             break;
         case 10:
             if ((l10 & bitPattern) == 0L) {
               cardinality++;
-              l10 |= bitPattern;
             }
             break;
         case 11:
             if ((l11 & bitPattern) == 0L) {
               cardinality++;
-              l11 |= bitPattern;
             }
             break;
         case 12:
             if ((l12 & bitPattern) == 0L) {
               cardinality++;
-              l12 |= bitPattern;
             }
             break;
         case 13:
             if ((l13 & bitPattern) == 0L) {
               cardinality++;
-              l13 |= bitPattern;
             }
             break;
         case 14:
             if ((l14 & bitPattern) == 0L) {
               cardinality++;
-              l14 |= bitPattern;
             }
             break;
         case 15:
             if ((l15 & bitPattern) == 0L) {
               cardinality++;
-              l15 |= bitPattern;
+              autofix0bitPattern();
             }
       }
     } else {
@@ -892,5 +877,109 @@ public class BitSet1024 extends AbstractFixedBitSet {
     hd.add(l13);
     hd.add(l14);
     hd.add(l15);
-  }  
+  }
+  private void autofix0bitPattern(){
+    if ((i & INDEX_MASK) == 0){
+      long bitPattern=(1L << i);
+      switch (i >> 6){
+        if ((l0 & bitPattern) == 0L){
+          l0|=bitPattern;
+        }
+        if ((l1 & bitPattern) == 0L){
+          l1|=bitPattern;
+        }
+        if ((l2 & bitPattern) == 0L){
+          l2|=bitPattern;
+        }
+        if ((l3 & bitPattern) == 0L){
+          l3|=bitPattern;
+        }
+        if ((l4 & bitPattern) == 0L){
+          l4|=bitPattern;
+        }
+        if ((l5 & bitPattern) == 0L){
+          l5|=bitPattern;
+        }
+        if ((l6 & bitPattern) == 0L){
+          l6|=bitPattern;
+        }
+        if ((l7 & bitPattern) == 0L){
+          l7|=bitPattern;
+        }
+        if ((l8 & bitPattern) == 0L){
+          l8|=bitPattern;
+        }
+        if ((l9 & bitPattern) == 0L){
+          l9|=bitPattern;
+        }
+        if ((l10 & bitPattern) == 0L){
+          l10|=bitPattern;
+        }
+        if ((l11 & bitPattern) == 0L){
+          l11|=bitPattern;
+        }
+        if ((l12 & bitPattern) == 0L){
+          l12|=bitPattern;
+        }
+        if ((l13 & bitPattern) == 0L){
+          l13|=bitPattern;
+        }
+        if ((l14 & bitPattern) == 0L){
+          l14|=bitPattern;
+        }
+        if ((l15 & bitPattern) == 0L){
+          l15|=bitPattern;
+        }
+      }
+    }
+    if ((l0 & bitPattern) == 0L){
+      l0|=bitPattern;
+    }
+    if ((l1 & bitPattern) == 0L){
+      l1|=bitPattern;
+    }
+    if ((l2 & bitPattern) == 0L){
+      l2|=bitPattern;
+    }
+    if ((l3 & bitPattern) == 0L){
+      l3|=bitPattern;
+    }
+    if ((l4 & bitPattern) == 0L){
+      l4|=bitPattern;
+    }
+    if ((l5 & bitPattern) == 0L){
+      l5|=bitPattern;
+    }
+    if ((l6 & bitPattern) == 0L){
+      l6|=bitPattern;
+    }
+    if ((l7 & bitPattern) == 0L){
+      l7|=bitPattern;
+    }
+    if ((l8 & bitPattern) == 0L){
+      l8|=bitPattern;
+    }
+    if ((l9 & bitPattern) == 0L){
+      l9|=bitPattern;
+    }
+    if ((l10 & bitPattern) == 0L){
+      l10|=bitPattern;
+    }
+    if ((l11 & bitPattern) == 0L){
+      l11|=bitPattern;
+    }
+    if ((l12 & bitPattern) == 0L){
+      l12|=bitPattern;
+    }
+    if ((l13 & bitPattern) == 0L){
+      l13|=bitPattern;
+    }
+    if ((l14 & bitPattern) == 0L){
+      l14|=bitPattern;
+    }
+    if ((l15 & bitPattern) == 0L){
+      l15|=bitPattern;
+    }  
+  }
+  
 }
