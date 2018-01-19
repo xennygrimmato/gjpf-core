@@ -24,8 +24,7 @@ import gov.nasa.jpf.vm.MJIEnv;
 import java.util.HashMap;
 
 public class CreatorsFactory {
-
-  static private final HashMap<String, Creator> creatorsTable = new HashMap<String, Creator>();
+  private static final HashMap<String, Creator> creatorsTable = new HashMap<String, Creator>();
 
   static {
     creatorsTable.put("java.lang.Boolean", new BoxedBoolCreator());
@@ -170,4 +169,5 @@ class StringCreator implements Creator {
 
     return stringRef;
   }
+  
 }

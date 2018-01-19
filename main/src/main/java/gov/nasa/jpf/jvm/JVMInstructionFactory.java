@@ -50,436 +50,219 @@ public abstract class JVMInstructionFactory implements Cloneable {
     // we should check the singleton first
     singleton = this;
   }
+  public abstract Instruction aconst_null();
+  public abstract Instruction aload(int localVarIndex);
+  public abstract Instruction aload_0();
+  public abstract Instruction aload_1();
+  public abstract Instruction aload_2();
+  public abstract Instruction aload_3();
+  public abstract Instruction aaload();
+  public abstract Instruction astore(int localVarIndex);
+  public abstract Instruction astore_0();
+  public abstract Instruction astore_1();
+  public abstract Instruction astore_2();
+  public abstract Instruction astore_3();
+  public abstract Instruction aastore();
+  public abstract Instruction areturn();
+  public abstract Instruction anewarray(String clsName);
+  public abstract Instruction arraylength();
+  public abstract Instruction athrow();
+  public abstract Instruction baload();
+  public abstract Instruction bastore();
+  public abstract Instruction bipush(int b);
+  public abstract Instruction caload();
+  public abstract Instruction castore();
+  public abstract Instruction checkcast(String clsName);
+  public abstract Instruction d2f();
+  public abstract Instruction d2i();
+  public abstract Instruction d2l();
+  public abstract Instruction dadd();
+  public abstract Instruction daload();
+  public abstract Instruction dastore();
+  public abstract Instruction dcmpg();
+  public abstract Instruction dcmpl();
+  public abstract Instruction dconst_0();
+  public abstract Instruction dconst_1();
+  public abstract Instruction ddiv();
+  public abstract Instruction dload(int localVarIndex);
+  public abstract Instruction dload_0();
+  public abstract Instruction dload_1();
+  public abstract Instruction dload_2();
+  public abstract Instruction dload_3();
+  public abstract Instruction dmul();
+  public abstract Instruction dneg();
+  public abstract Instruction drem();
+  public abstract Instruction dreturn();
+  public abstract Instruction dstore(int localVarIndex);
+  public abstract Instruction dstore_0();
+  public abstract Instruction dstore_1();
+  public abstract Instruction dstore_2();
+  public abstract Instruction dstore_3();
+  public abstract Instruction dsub();
+  public abstract Instruction dup();
+  public abstract Instruction dup_x1();
+  public abstract Instruction dup_x2();
+  public abstract Instruction dup2();
+  public abstract Instruction dup2_x1();
+  public abstract Instruction dup2_x2();
+  public abstract Instruction f2d();
+  public abstract Instruction f2i();
+  public abstract Instruction f2l();
+  public abstract Instruction fadd();
+  public abstract Instruction faload();
+  public abstract Instruction fastore();
+  public abstract Instruction fcmpg();
+  public abstract Instruction fcmpl();
+  public abstract Instruction fconst_0();
+  public abstract Instruction fconst_1();
+  public abstract Instruction fconst_2();
+  public abstract Instruction fdiv();
+  public abstract Instruction fload(int localVarIndex);
+  public abstract Instruction fload_0();
+  public abstract Instruction fload_1();
+  public abstract Instruction fload_2();
+  public abstract Instruction fload_3();
+  public abstract Instruction fmul();
+  public abstract Instruction fneg();
+  public abstract Instruction frem();
+  public abstract Instruction freturn();
+  public abstract Instruction fstore(int localVarIndex);
+  public abstract Instruction fstore_0();
+  public abstract Instruction fstore_1();
+  public abstract Instruction fstore_2();
+  public abstract Instruction fstore_3();
+  public abstract Instruction fsub();
+  public abstract Instruction getfield(String fieldName, String clsName, String fieldDescriptor);
+  public abstract Instruction getstatic(String fieldName, String clsName, String fieldDescriptor);
+  public abstract Instruction goto_(int targetPc);
+  public abstract Instruction goto_w(int targetPc);
+  public abstract Instruction i2b();
+  public abstract Instruction i2c();
+  public abstract Instruction i2d();
+  public abstract Instruction i2f();
+  public abstract Instruction i2l();
+  public abstract Instruction i2s();
+  public abstract Instruction iadd();
+  public abstract Instruction iaload();
+  public abstract Instruction iand();
+  public abstract Instruction iastore();
+  public abstract Instruction iconst_m1();
+  public abstract Instruction iconst_0();
+  public abstract Instruction iconst_1();
+  public abstract Instruction iconst_2();
+  public abstract Instruction iconst_3();
+  public abstract Instruction iconst_4();
+  public abstract Instruction iconst_5();
+  public abstract Instruction idiv();
+  public abstract Instruction if_acmpeq(int targetPc);
+  public abstract Instruction if_acmpne(int targetPc);
+  public abstract Instruction if_icmpeq(int targetPc);
+  public abstract Instruction if_icmpne(int targetPc);
+  public abstract Instruction if_icmplt(int targetPc);
+  public abstract Instruction if_icmpge(int targetPc);
+  public abstract Instruction if_icmpgt(int targetPc);
+  public abstract Instruction if_icmple(int targetPc);
+  public abstract Instruction ifeq(int targetPc);
+  public abstract Instruction ifne(int targetPc);
+  public abstract Instruction iflt(int targetPc);
+  public abstract Instruction ifge(int targetPc);
+  public abstract Instruction ifgt(int targetPc);
+  public abstract Instruction ifle(int targetPc);
+  public abstract Instruction ifnonnull(int targetPc);
+  public abstract Instruction ifnull(int targetPc);
+  public abstract Instruction iinc(int localVarIndex, int incConstant);
+  public abstract Instruction iload(int localVarIndex);
+  public abstract Instruction iload_0();
+  public abstract Instruction iload_1();
+  public abstract Instruction iload_2();
+  public abstract Instruction iload_3();
+  public abstract Instruction imul();
+  public abstract Instruction ineg();
+  public abstract Instruction instanceof_(String clsName);
+  public abstract Instruction invokeinterface(String clsName, String methodName, String methodSignature);
+  public abstract Instruction invokespecial(String clsName, String methodName, String methodSignature);
+  public abstract Instruction invokestatic(String clsName, String methodName, String methodSignature);
+  public abstract Instruction invokevirtual(String clsName, String methodName, String methodSignature);
+  public abstract Instruction invokedynamic(int bootstrapIndex, String samMethodName, String functionType);
+  public abstract Instruction ior();
+  public abstract Instruction irem();
+  public abstract Instruction ireturn();
+  public abstract Instruction ishl();
+  public abstract Instruction ishr();
+  public abstract Instruction istore(int localVarIndex);
+  public abstract Instruction istore_0();
+  public abstract Instruction istore_1();
+  public abstract Instruction istore_2();
+  public abstract Instruction istore_3();
+  public abstract Instruction isub();
+  public abstract Instruction iushr();
+  public abstract Instruction ixor();
+  public abstract Instruction jsr(int targetPc);
+  public abstract Instruction jsr_w(int targetPc);
+  public abstract Instruction l2d();
+  public abstract Instruction l2f();
+  public abstract Instruction l2i();
+  public abstract Instruction ladd();
+  public abstract Instruction laload();
+  public abstract Instruction land();
+  public abstract Instruction lastore();
+  public abstract Instruction lcmp();
+  public abstract Instruction lconst_0();
+  public abstract Instruction lconst_1();
+  public abstract Instruction ldc(int v);
+  public abstract Instruction ldc(float v);
+  public abstract Instruction ldc(String v, boolean isClass);
+  public abstract Instruction ldc_w(int v);
+  public abstract Instruction ldc_w(float v);
+  public abstract Instruction ldc_w(String v, boolean isClass);
+  public abstract Instruction ldc2_w(long v);
+  public abstract Instruction ldc2_w(double v);
+  public abstract Instruction ldiv();
+  public abstract Instruction lload(int localVarIndex);
+  public abstract Instruction lload_0();
+  public abstract Instruction lload_1();
+  public abstract Instruction lload_2();
+  public abstract Instruction lload_3();
+  public abstract Instruction lmul();
+  public abstract Instruction lneg();
+  public abstract Instruction lookupswitch(int defaultTargetPc, int nEntries);
+  public abstract Instruction lor();
+  public abstract Instruction lrem();
+  public abstract Instruction lreturn();
+  public abstract Instruction lshl();
+  public abstract Instruction lshr();
+  public abstract Instruction lstore(int localVarIndex);
+  public abstract Instruction lstore_0();
+  public abstract Instruction lstore_1();
+  public abstract Instruction lstore_2();
+  public abstract Instruction lstore_3();
+  public abstract Instruction lsub();
+  public abstract Instruction lushr();
+  public abstract Instruction lxor();
+  public abstract Instruction monitorenter();
+  public abstract Instruction monitorexit();
+  public abstract Instruction multianewarray(String clsName, int dimensions);
+  public abstract Instruction new_(String clsName);
+  public abstract Instruction newarray(int typeCode);
+  public abstract Instruction nop();
+  public abstract Instruction pop();
+  public abstract Instruction pop2();
+  public abstract Instruction putfield(String fieldName, String clsName, String fieldDescriptor);
+  public abstract Instruction putstatic(String fieldName, String clsName, String fieldDescriptor);
+  public abstract Instruction ret(int localVarIndex);
+  public abstract Instruction return_();
+  public abstract Instruction saload();
+  public abstract Instruction sastore();
+  public abstract Instruction sipush(int val);
+  public abstract Instruction swap();
+  public abstract Instruction tableswitch(int defaultTargetPc, int low, int high);
+  public abstract Instruction wide();
+  public abstract Instruction invokecg(List<Invocation> invokes);
+  public abstract Instruction invokeclinit(ClassInfo ci);
+  public abstract Instruction directcallreturn();
+  public abstract Instruction executenative(NativeMethodInfo mi);
+  public abstract Instruction nativereturn();
+  public abstract Instruction runstart(MethodInfo miRun);
+  public abstract Instruction finishclinit(ClassInfo ci);
   
-
-  //--- the factory methods
-  abstract public Instruction aconst_null ();
-
-  abstract public Instruction aload (int localVarIndex);
-
-  abstract public Instruction aload_0 ();
-
-  abstract public Instruction aload_1 ();
-
-  abstract public Instruction aload_2 ();
-
-  abstract public Instruction aload_3 ();
-
-  abstract public Instruction aaload ();
-
-  abstract public Instruction astore (int localVarIndex);
-
-  abstract public Instruction astore_0 ();
-
-  abstract public Instruction astore_1 ();
-
-  abstract public Instruction astore_2 ();
-
-  abstract public Instruction astore_3 ();
-
-  abstract public Instruction aastore ();
-
-  abstract public Instruction areturn ();
-
-  abstract public Instruction anewarray (String clsName);
-
-  abstract public Instruction arraylength ();
-
-  abstract public Instruction athrow ();
-
-  abstract public Instruction baload ();
-
-  abstract public Instruction bastore ();
-
-  abstract public Instruction bipush (int b);
-
-  abstract public Instruction caload ();
-
-  abstract public Instruction castore ();
-
-  abstract public Instruction checkcast (String clsName);
-
-  abstract public Instruction d2f ();
-
-  abstract public Instruction d2i ();
-
-  abstract public Instruction d2l ();
-
-  abstract public Instruction dadd ();
-
-  abstract public Instruction daload ();
-
-  abstract public Instruction dastore ();
-
-  abstract public Instruction dcmpg ();
-
-  abstract public Instruction dcmpl ();
-
-  abstract public Instruction dconst_0 ();
-
-  abstract public Instruction dconst_1 ();
-
-  abstract public Instruction ddiv ();
-
-  abstract public Instruction dload (int localVarIndex);
-
-  abstract public Instruction dload_0 ();
-
-  abstract public Instruction dload_1 ();
-
-  abstract public Instruction dload_2 ();
-
-  abstract public Instruction dload_3 ();
-
-  abstract public Instruction dmul ();
-
-  abstract public Instruction dneg ();
-
-  abstract public Instruction drem ();
-
-  abstract public Instruction dreturn ();
-
-  abstract public Instruction dstore (int localVarIndex);
-
-  abstract public Instruction dstore_0 ();
-
-  abstract public Instruction dstore_1 ();
-
-  abstract public Instruction dstore_2 ();
-
-  abstract public Instruction dstore_3 ();
-
-  abstract public Instruction dsub ();
-
-  abstract public Instruction dup ();
-
-  abstract public Instruction dup_x1 ();
-
-  abstract public Instruction dup_x2 ();
-
-  abstract public Instruction dup2 ();
-
-  abstract public Instruction dup2_x1 ();
-
-  abstract public Instruction dup2_x2 ();
-
-  abstract public Instruction f2d ();
-
-  abstract public Instruction f2i ();
-
-  abstract public Instruction f2l ();
-
-  abstract public Instruction fadd ();
-
-  abstract public Instruction faload ();
-
-  abstract public Instruction fastore ();
-
-  abstract public Instruction fcmpg ();
-
-  abstract public Instruction fcmpl ();
-
-  abstract public Instruction fconst_0 ();
-
-  abstract public Instruction fconst_1 ();
-
-  abstract public Instruction fconst_2 ();
-
-  abstract public Instruction fdiv ();
-
-  abstract public Instruction fload (int localVarIndex);
-
-  abstract public Instruction fload_0 ();
-
-  abstract public Instruction fload_1 ();
-
-  abstract public Instruction fload_2 ();
-
-  abstract public Instruction fload_3 ();
-
-  abstract public Instruction fmul ();
-
-  abstract public Instruction fneg ();
-
-  abstract public Instruction frem ();
-
-  abstract public Instruction freturn ();
-
-  abstract public Instruction fstore (int localVarIndex);
-
-  abstract public Instruction fstore_0 ();
-
-  abstract public Instruction fstore_1 ();
-
-  abstract public Instruction fstore_2 ();
-
-  abstract public Instruction fstore_3 ();
-
-  abstract public Instruction fsub ();
-
-  abstract public Instruction getfield (String fieldName, String clsName, String fieldDescriptor);
-
-  abstract public Instruction getstatic (String fieldName, String clsName, String fieldDescriptor);
-
-  abstract public Instruction goto_ (int targetPc);
-
-  abstract public Instruction goto_w (int targetPc);
-
-  abstract public Instruction i2b ();
-
-  abstract public Instruction i2c ();
-
-  abstract public Instruction i2d ();
-
-  abstract public Instruction i2f ();
-
-  abstract public Instruction i2l ();
-
-  abstract public Instruction i2s ();
-
-  abstract public Instruction iadd ();
-
-  abstract public Instruction iaload ();
-
-  abstract public Instruction iand ();
-
-  abstract public Instruction iastore ();
-
-  abstract public Instruction iconst_m1 ();
-
-  abstract public Instruction iconst_0 ();
-
-  abstract public Instruction iconst_1 ();
-
-  abstract public Instruction iconst_2 ();
-
-  abstract public Instruction iconst_3 ();
-
-  abstract public Instruction iconst_4 ();
-
-  abstract public Instruction iconst_5 ();
-
-  abstract public Instruction idiv ();
-
-  abstract public Instruction if_acmpeq (int targetPc);
-
-  abstract public Instruction if_acmpne (int targetPc);
-
-  abstract public Instruction if_icmpeq (int targetPc);
-
-  abstract public Instruction if_icmpne (int targetPc);
-
-  abstract public Instruction if_icmplt (int targetPc);
-
-  abstract public Instruction if_icmpge (int targetPc);
-
-  abstract public Instruction if_icmpgt (int targetPc);
-
-  abstract public Instruction if_icmple (int targetPc);
-
-  abstract public Instruction ifeq (int targetPc);
-
-  abstract public Instruction ifne (int targetPc);
-
-  abstract public Instruction iflt (int targetPc);
-
-  abstract public Instruction ifge (int targetPc);
-
-  abstract public Instruction ifgt (int targetPc);
-
-  abstract public Instruction ifle (int targetPc);
-
-  abstract public Instruction ifnonnull (int targetPc);
-
-  abstract public Instruction ifnull (int targetPc);
-
-  abstract public Instruction iinc (int localVarIndex, int incConstant);
-
-  abstract public Instruction iload (int localVarIndex);
-
-  abstract public Instruction iload_0 ();
-
-  abstract public Instruction iload_1 ();
-
-  abstract public Instruction iload_2 ();
-
-  abstract public Instruction iload_3 ();
-
-  abstract public Instruction imul ();
-
-  abstract public Instruction ineg ();
-
-  abstract public Instruction instanceof_ (String clsName);
-
-  abstract public Instruction invokeinterface (String clsName, String methodName, String methodSignature);
-
-  abstract public Instruction invokespecial (String clsName, String methodName, String methodSignature);
-
-  abstract public Instruction invokestatic (String clsName, String methodName, String methodSignature);
-
-  abstract public Instruction invokevirtual (String clsName, String methodName, String methodSignature);
-  
-  abstract public Instruction invokedynamic (int bootstrapIndex, String samMethodName, String functionType);
-
-  abstract public Instruction ior ();
-
-  abstract public Instruction irem ();
-
-  abstract public Instruction ireturn ();
-
-  abstract public Instruction ishl ();
-
-  abstract public Instruction ishr ();
-
-  abstract public Instruction istore (int localVarIndex);
-
-  abstract public Instruction istore_0 ();
-
-  abstract public Instruction istore_1 ();
-
-  abstract public Instruction istore_2 ();
-
-  abstract public Instruction istore_3 ();
-
-  abstract public Instruction isub ();
-
-  abstract public Instruction iushr ();
-
-  abstract public Instruction ixor ();
-
-  abstract public Instruction jsr (int targetPc);
-
-  abstract public Instruction jsr_w (int targetPc);
-
-  abstract public Instruction l2d ();
-
-  abstract public Instruction l2f ();
-
-  abstract public Instruction l2i ();
-
-  abstract public Instruction ladd ();
-
-  abstract public Instruction laload ();
-
-  abstract public Instruction land ();
-
-  abstract public Instruction lastore ();
-
-  abstract public Instruction lcmp ();
-
-  abstract public Instruction lconst_0 ();
-
-  abstract public Instruction lconst_1 ();
-
-  abstract public Instruction ldc (int v);
-
-  abstract public Instruction ldc (float v);
-
-  abstract public Instruction ldc (String v, boolean isClass);
-
-  abstract public Instruction ldc_w (int v);
-
-  abstract public Instruction ldc_w (float v);
-
-  abstract public Instruction ldc_w (String v, boolean isClass);
-
-  abstract public Instruction ldc2_w (long v);
-
-  abstract public Instruction ldc2_w (double v);
-
-  abstract public Instruction ldiv ();
-
-  abstract public Instruction lload (int localVarIndex);
-
-  abstract public Instruction lload_0 ();
-
-  abstract public Instruction lload_1 ();
-
-  abstract public Instruction lload_2 ();
-
-  abstract public Instruction lload_3 ();
-
-  abstract public Instruction lmul ();
-
-  abstract public Instruction lneg ();
-
-  abstract public Instruction lookupswitch (int defaultTargetPc, int nEntries);
-
-  abstract public Instruction lor ();
-
-  abstract public Instruction lrem ();
-
-  abstract public Instruction lreturn ();
-
-  abstract public Instruction lshl ();
-
-  abstract public Instruction lshr ();
-
-  abstract public Instruction lstore (int localVarIndex);
-
-  abstract public Instruction lstore_0 ();
-
-  abstract public Instruction lstore_1 ();
-
-  abstract public Instruction lstore_2 ();
-
-  abstract public Instruction lstore_3 ();
-
-  abstract public Instruction lsub ();
-
-  abstract public Instruction lushr ();
-
-  abstract public Instruction lxor ();
-
-  abstract public Instruction monitorenter ();
-
-  abstract public Instruction monitorexit ();
-
-  abstract public Instruction multianewarray (String clsName, int dimensions);
-
-  abstract public Instruction new_ (String clsName);
-
-  abstract public Instruction newarray (int typeCode);
-
-  abstract public Instruction nop ();
-
-  abstract public Instruction pop ();
-
-  abstract public Instruction pop2 ();
-
-  abstract public Instruction putfield (String fieldName, String clsName, String fieldDescriptor);
-
-  abstract public Instruction putstatic (String fieldName, String clsName, String fieldDescriptor);
-
-  abstract public Instruction ret (int localVarIndex);
-
-  abstract public Instruction return_ ();
-
-  abstract public Instruction saload ();
-
-  abstract public Instruction sastore ();
-
-  abstract public Instruction sipush (int val);
-
-  abstract public Instruction swap ();
-
-  abstract public Instruction tableswitch (int defaultTargetPc, int low, int high);
-
-  abstract public Instruction wide ();
-
-  //--- the JPF specific ones (only used in synthetic methods)
-  abstract public Instruction invokecg (List<Invocation> invokes);
-
-  abstract public Instruction invokeclinit (ClassInfo ci);
-
-  abstract public Instruction directcallreturn ();
-
-  abstract public Instruction executenative (NativeMethodInfo mi);
-
-  abstract public Instruction nativereturn ();
-
-  // this is never part of MethodInfo stored code
-  abstract public Instruction runstart (MethodInfo miRun);
-
-  abstract public Instruction finishclinit (ClassInfo ci);
 }

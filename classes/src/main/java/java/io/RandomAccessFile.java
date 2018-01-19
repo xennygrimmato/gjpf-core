@@ -84,8 +84,7 @@ public class RandomAccessFile {
     long chunk_index;
     int[] data;
   }
-
-  private final static void printList(DataRepresentation node) {
+  private static final void printList(DataRepresentation node) {
     DataRepresentation cur = node;
     System.out.print("Chunks:");
     while (cur != null) {
@@ -102,5 +101,6 @@ public class RandomAccessFile {
   private long currentLength;
   private long currentPosition;
   private DataRepresentation data_root = null;
-}
 
+  
+}

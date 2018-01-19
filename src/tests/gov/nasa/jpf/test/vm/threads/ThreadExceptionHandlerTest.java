@@ -25,8 +25,7 @@ import org.junit.Test;
 public class ThreadExceptionHandlerTest extends TestJPF {
 
   static int n = 0;
-
-  public final static void main(String[] testMethods) {
+  public static final void main(String[] testMethods) {
     runTestsOfThisClass(testMethods);
   }
 
@@ -251,4 +250,5 @@ public class ThreadExceptionHandlerTest extends TestJPF {
       }
     }
   }
+  
 }

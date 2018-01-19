@@ -83,7 +83,7 @@ public class System {
         //return cls.getAnnotationType();
       }
       @Override
-	public <E extends Enum<E>> E[] getEnumConstantsShared(Class<E> cls) {
+      public <MISSING extends Enum<E>> E[] getEnumConstantsShared(Class<E> cls) {
         return cls.getEnumConstantsShared();
       }
       @Override
@@ -106,11 +106,9 @@ public class System {
       }
     };
   }
-
-  static private native String[] getKeyValuePairs();
-
-  static private native PrintStream createSystemOut();
-  static private native PrintStream createSystemErr();
+  private static native String[] getKeyValuePairs();
+  private static native PrintStream createSystemOut();
+  private static native PrintStream createSystemErr();
 
   //--- standard streams
   public static void setIn (InputStream newIn) {
@@ -208,6 +206,7 @@ public class System {
   public static String mapLibraryName (String libName){
     // just a placeholder (Unix flavor)
     return "lib" + libName + ".so";
-  }
 
+  }
+  
 }

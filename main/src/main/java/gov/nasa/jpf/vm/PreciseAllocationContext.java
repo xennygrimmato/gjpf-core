@@ -31,10 +31,7 @@ import java.util.HashMap;
  * creating a myriad of redundant objects
  */
 public class PreciseAllocationContext implements AllocationContext {
-
-  // this is search global, i.e. does not have to be backtracked, but has to be
-  // re-initialized between JPF runs (everything that changes hashCode)
-  static private HashMap<PreciseAllocationContext,PreciseAllocationContext> ccCache = new HashMap<PreciseAllocationContext,PreciseAllocationContext>();
+  private static HashMap<PreciseAllocationContext, PreciseAllocationContext> ccCache = new HashMap<PreciseAllocationContext, PreciseAllocationContext>();
   
   protected ThreadInfo ti;
   protected Instruction[] cc;
@@ -164,4 +161,5 @@ public class PreciseAllocationContext implements AllocationContext {
     sb.append("])");
     return sb.toString();
   }
+  
 }

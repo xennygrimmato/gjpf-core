@@ -557,10 +557,8 @@ public abstract class ElementInfo implements Cloneable {
   public ClassInfo getClassInfo() {
     return ci;
   }
-
-  abstract protected FieldInfo getDeclaredFieldInfo(String clsBase, String fname);
-
-  abstract protected FieldInfo getFieldInfo(String fname);
+  protected abstract FieldInfo getDeclaredFieldInfo(String clsBase, String fname);
+  protected abstract FieldInfo getFieldInfo(String fname);
 
   protected abstract int getNumberOfFieldsOrElements();
 
@@ -617,22 +615,16 @@ public abstract class ElementInfo implements Cloneable {
     checkIsModifiable();
     fields.replaceObjectAttr(oldAttr, newAttr);
   }
-
-  
-  /**
-   * this only returns the first attr of this type, there can be more
-   * if you don't use client private types or the provided type is too general
-   */
-  public <T> T getObjectAttr (Class<T> attrType) {
+  public <MISSING> T getObjectAttr(Class<T> attrType) {
     return fields.getObjectAttr(attrType);
   }
-  public <T> T getNextObjectAttr (Class<T> attrType, Object prev) {
+  public <MISSING> T getNextObjectAttr(Class<T> attrType, Object prev) {
     return fields.getNextObjectAttr(attrType, prev);
   }
   public ObjectList.Iterator objectAttrIterator(){
     return fields.objectAttrIterator();
   }
-  public <T> ObjectList.TypedIterator<T> objectAttrIterator(Class<T> type){
+  public <MISSING> ObjectList.TypedIterator<T> objectAttrIterator(Class<T> type) {
     return fields.objectAttrIterator(type);
   }
   
@@ -682,21 +674,16 @@ public abstract class ElementInfo implements Cloneable {
     checkIsModifiable();    
     fields.replaceFieldAttr(fi.getFieldIndex(), oldAttr, newAttr);
   }
-  
-  /**
-   * this only returns the first attr of this type, there can be more
-   * if you don't use client private types or the provided type is too general
-   */
-  public <T> T getFieldAttr (FieldInfo fi, Class<T> attrType) {
+  public <MISSING> T getFieldAttr(FieldInfo fi, Class<T> attrType) {
     return fields.getFieldAttr(fi.getFieldIndex(), attrType);
   }
-  public <T> T getNextFieldAttr (FieldInfo fi, Class<T> attrType, Object prev) {
+  public <MISSING> T getNextFieldAttr(FieldInfo fi, Class<T> attrType, Object prev) {
     return fields.getNextFieldAttr(fi.getFieldIndex(), attrType, prev);
   }
   public ObjectList.Iterator fieldAttrIterator (FieldInfo fi){
     return fields.fieldAttrIterator(fi.getFieldIndex());
   }
-  public <T> ObjectList.TypedIterator<T> fieldAttrIterator (FieldInfo fi, Class<T> type){
+  public <MISSING> ObjectList.TypedIterator<T> fieldAttrIterator(FieldInfo fi, Class<T> type) {
     return fields.fieldAttrIterator(fi.getFieldIndex(), type);
   }
   
@@ -771,21 +758,16 @@ public abstract class ElementInfo implements Cloneable {
   public void replaceElementAttrNoClone (int idx, Object oldAttr, Object newAttr){
     fields.replaceFieldAttr(idx, oldAttr, newAttr);
   }
-  
-  /**
-   * this only returns the first attr of this type, there can be more
-   * if you don't use client private types or the provided type is too general
-   */
-  public <T> T getElementAttr (int idx, Class<T> attrType) {
+  public <MISSING> T getElementAttr(int idx, Class<T> attrType) {
     return fields.getFieldAttr(idx, attrType);
   }
-  public <T> T getNextElementAttr (int idx, Class<T> attrType, Object prev) {
+  public <MISSING> T getNextElementAttr(int idx, Class<T> attrType, Object prev) {
     return fields.getNextFieldAttr(idx, attrType, prev);
   }
   public ObjectList.Iterator elementAttrIterator (int idx){
     return fields.fieldAttrIterator(idx);
   }
-  public <T> ObjectList.TypedIterator<T> elementAttrIterator (int idx, Class<T> type){
+  public <MISSING> ObjectList.TypedIterator<T> elementAttrIterator(int idx, Class<T> type) {
     return fields.fieldAttrIterator(idx, type);
   }
 
@@ -1682,10 +1664,8 @@ public abstract class ElementInfo implements Cloneable {
   public boolean instanceOf(String type) {
     return Types.instanceOf(ci.getType(), type);
   }
-
-  abstract public int getNumberOfFields();
-
-  abstract public FieldInfo getFieldInfo(int fieldIndex);
+  public abstract int getNumberOfFields();
+  public abstract FieldInfo getFieldInfo(int fieldIndex);
 
   /**
    * threads that will grab our lock on their next execution have to be
@@ -2251,7 +2231,8 @@ public abstract class ElementInfo implements Cloneable {
       VM.getVM().dumpThreadStates();
       assert false;
     }
+
   }
 
+  
 }
-

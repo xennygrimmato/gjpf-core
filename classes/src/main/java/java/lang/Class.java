@@ -34,23 +34,8 @@ import java.util.Map;
 
 import sun.reflect.ConstantPool;
 import sun.reflect.annotation.AnnotationType;
-
-/**
- * MJI model class for java.lang.Class library abstraction
- *
- * This is a JPF specific version of a system class because we can't use the real,
- * platform VM specific version (it's native all over the place, its field
- * structure isn't documented, most of its methods are private, hence we can't
- * even instantiate it properly).
- *
- * Note that this class never gets seen by the real VM - it's for JPF's eyes only.
- *
- * For now, it's only a fragment to test the mechanism, and provide basic
- * class.getName() / Class.ForName() support (which is (almost) enough for
- * Java assertion support
- */
-@SuppressWarnings("unused")  // native peer uses
-public final class Class<T> implements Serializable, GenericDeclaration, Type, AnnotatedElement {
+@SuppressWarnings("unused")
+public final class Class<MISSING> implements Serializable, GenericDeclaration, Type, AnnotatedElement {
 
   /** don't use serialVersionUID from JDK 1.1 for interoperability */
   private static final long serialVersionUID = 3206093459760846163L + 1;
@@ -78,9 +63,8 @@ public final class Class<T> implements Serializable, GenericDeclaration, Type, A
 
   @Override
   public native Annotation[] getAnnotations();
-
   @Override
-  public native <A extends Annotation> A getAnnotation( Class<A> annotationCls);
+  public native <MISSING extends Annotation> A getAnnotation(Class<A> annotationCls);
 
   // those are from Java 6
   public native boolean isAnnotation ();
@@ -255,17 +239,15 @@ public final class Class<T> implements Serializable, GenericDeclaration, Type, A
     if (o != null && !isInstance(o)) throw new ClassCastException();
     return (T) o;
   }
-  
   @SuppressWarnings("unchecked")
-  public <U> Class<? extends U> asSubclass(Class<U> clazz) {
+  public <MISSING> Class<? extends U> asSubclass(Class<U> clazz) {
     if (clazz.isAssignableFrom(this)) {
       return (Class<? extends U>) this;
     } else {
       throw new ClassCastException("" + this + " is not a " + clazz);
     }
   }
-
-  native public boolean desiredAssertionStatus ();
+  public native boolean desiredAssertionStatus();
 
   public ClassLoader getClassLoader() {
     return classLoader;
@@ -359,4 +341,5 @@ public final class Class<T> implements Serializable, GenericDeclaration, Type, A
     final int SYNTHETIC = 0x00001000;
     return (getModifiers() & SYNTHETIC) != 0;
   }
+  
 }

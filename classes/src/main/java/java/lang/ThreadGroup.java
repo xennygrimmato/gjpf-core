@@ -412,9 +412,7 @@ public class ThreadGroup implements Thread.UncaughtExceptionHandler {
     
     return suicide;
   }
-  
-  
-  public synchronized final void destroy(){
+  public final synchronized void destroy() {
     if (destroyed || (nthreads > 0)) {
       throw new IllegalThreadStateException();
     }
@@ -484,4 +482,5 @@ public class ThreadGroup implements Thread.UncaughtExceptionHandler {
       }
     }
   }
+  
 }

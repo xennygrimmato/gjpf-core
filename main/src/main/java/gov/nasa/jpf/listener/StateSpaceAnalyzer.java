@@ -222,22 +222,7 @@ public class StateSpaceAnalyzer extends ListenerAdapter implements PublisherExte
       new PublishConsole((ConsolePublisher) publisher, groupers, m_maxOutputLines).publish();
     }
   }
-
-  private enum CGType {
-
-    FieldAccess,
-    ObjectWait,
-    ObjectNotify,
-    SyncEnter,
-    SyncExit,
-    ThreadStart,
-    ThreadTerminate,
-    ThreadSuspend,
-    ThreadResume,
-    SyncCall,
-    SyncReturn,
-    AtomicOp,
-    DataChoice
+  private class s {
   }
 
   private interface CGAccessor {
@@ -674,8 +659,7 @@ public class StateSpaceAnalyzer extends ListenerAdapter implements PublisherExte
       m_root.add(generator); 
     }
   }
-
-  private static abstract class Publish {
+  private abstract static class Publish {
 
     protected final Publisher m_publisher;
     protected final CGGrouper m_groupers[];
@@ -799,4 +783,5 @@ public class StateSpaceAnalyzer extends ListenerAdapter implements PublisherExte
       }
     }
   }
+  
 }

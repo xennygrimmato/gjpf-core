@@ -49,8 +49,7 @@ import gov.nasa.jpf.vm.ThreadInfo;
  *
  */
 public class NumericValueChecker extends PropertyListenerAdapter {
-
-  static abstract class RangeCheck {
+  abstract static class RangeCheck {
     double min, max;
 
     RangeCheck (double min, double max){
@@ -273,4 +272,5 @@ public class NumericValueChecker extends PropertyListenerAdapter {
   public String getErrorMessage(){
     return error;
   }
+  
 }

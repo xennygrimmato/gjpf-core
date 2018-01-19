@@ -49,8 +49,7 @@ public class Source {
   static List<SourceRoot> sourceRoots;
   static Hashtable<String,Source> sources = new Hashtable<String,Source>();
   static Source noSource = new Source(null, null);
-
-  static abstract class SourceRoot { // common base
+  abstract static class SourceRoot { // common base
     abstract InputStream getInputStream (String fname);
   }
 
@@ -332,4 +331,5 @@ public class Source {
   public String getPath() {
     return root.toString() + File.separatorChar + fname;
   }
+  
 }

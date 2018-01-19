@@ -33,14 +33,10 @@ public abstract class JVMReturnInstruction extends ReturnInstruction implements 
 
   // to store where we came from
   protected StackFrame returnFrame;
-
-  abstract public int getReturnTypeSize();
-  abstract protected Object getReturnedOperandAttr(StackFrame frame);
-  
-  // note these are only callable from within the same enter - thread interleavings
-  // would cause races
-  abstract protected void getAndSaveReturnValue (StackFrame frame);
-  abstract protected void pushReturnValue (StackFrame frame);
+  public abstract int getReturnTypeSize();
+  protected abstract Object getReturnedOperandAttr(StackFrame frame);
+  protected abstract void getAndSaveReturnValue(StackFrame frame);
+  protected abstract void pushReturnValue(StackFrame frame);
 
   public abstract Object getReturnValue(ThreadInfo ti);
 
@@ -106,16 +102,11 @@ public abstract class JVMReturnInstruction extends ReturnInstruction implements 
     StackFrame frame = ti.getModifiableTopFrame();
     frame.addOperandAttr(attr);
   }
-
-  /**
-   * this only returns the first attr of this type, there can be more
-   * if you don't use client private types or the provided type is too general
-   */
-  public <T> T getReturnAttr (ThreadInfo ti, Class<T> type){
+  public <MISSING> T getReturnAttr(ThreadInfo ti, Class<T> type) {
     StackFrame frame = ti.getTopFrame();
     return frame.getOperandAttr(type);
   }
-  public <T> T getNextReturnAttr (ThreadInfo ti, Class<T> type, Object prev){
+  public <MISSING> T getNextReturnAttr(ThreadInfo ti, Class<T> type, Object prev) {
     StackFrame frame = ti.getTopFrame();
     return frame.getNextOperandAttr(type, prev);
   }
@@ -123,7 +114,7 @@ public abstract class JVMReturnInstruction extends ReturnInstruction implements 
     StackFrame frame = ti.getTopFrame();
     return frame.operandAttrIterator();
   }
-  public <T> Iterator<T> returnAttrIterator (ThreadInfo ti, Class<T> type){
+  public <MISSING> Iterator<T> returnAttrIterator(ThreadInfo ti, Class<T> type) {
     StackFrame frame = ti.getTopFrame();
     return frame.operandAttrIterator(type);
   }
@@ -179,4 +170,5 @@ public abstract class JVMReturnInstruction extends ReturnInstruction implements 
   public String toPostExecString() {
     return getMnemonic() + " [" + mi.getFullName() + ']';
   }
+  
 }
