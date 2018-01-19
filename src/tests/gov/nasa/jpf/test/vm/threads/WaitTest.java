@@ -57,7 +57,7 @@ public class WaitTest extends TestJPF
           synchronized (WaitTest.this) {
             System.out.println("notifying");
             cond = true;
-            WaitTest.this.notify();
+            WaitTest.this.notifyAll();
           }
         }
       };
@@ -107,7 +107,7 @@ public class WaitTest extends TestJPF
 
       synchronized (waiter) {
         System.out.println("main notifying");
-        waiter.notify();
+        waiter.notifyAll();
       }
     }
   }
@@ -125,7 +125,7 @@ public class WaitTest extends TestJPF
           synchronized (WaitTest.this) {
             System.out.println("notifying");
             cond = true;
-            WaitTest.this.notify();
+            WaitTest.this.notifyAll();
           }
         }
       };
@@ -166,7 +166,7 @@ public class WaitTest extends TestJPF
             synchronized (WaitTest.this) {
               System.out.println("notifying");
               cond = true;
-              WaitTest.this.notify();
+              WaitTest.this.notifyAll();
             }
           }
         }
@@ -314,5 +314,6 @@ public class WaitTest extends TestJPF
       }
     }
   }
-}
 
+  
+}

@@ -89,7 +89,7 @@ public class AtomicTest extends TestJPF {
         @Override
 		public synchronized void run() {
           System.out.println("T notifying..");
-          this.notify();
+          this.notifyAll();
         }
       };
 
@@ -111,4 +111,5 @@ public class AtomicTest extends TestJPF {
       }
     }
   }
+  
 }
