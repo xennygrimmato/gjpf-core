@@ -78,8 +78,8 @@ public class JPF_gov_nasa_jpf_vm_Verify extends NativePeer {
   static int nextBitSet;
 
   static PrintStream out;
-  
-  public static boolean init (Config conf) {
+  @Override
+  public static boolean init(Config conf) {
 
     if (!isInitialized){
       supportIgnorePath = conf.getBoolean("vm.verify.ignore_path");
@@ -335,9 +335,7 @@ public class JPF_gov_nasa_jpf_vm_Verify extends NativePeer {
 
     return false;
   }
-
-
-  static <T extends ChoiceGenerator<?>> T createChoiceGenerator (Class<T> cgClass, SystemState ss, String id) {
+  static <MISSING extends ChoiceGenerator<?>> T createChoiceGenerator(Class<T> cgClass, SystemState ss, String id) {
     T gen = null;
 
     cgArgs[0] = config;
@@ -347,8 +345,8 @@ public class JPF_gov_nasa_jpf_vm_Verify extends NativePeer {
     gen = config.getEssentialInstance(key, cgClass, cgArgTypes, cgArgs);
     return gen;
   }
-
-  static <T> T registerChoiceGenerator (MJIEnv env, SystemState ss, ThreadInfo ti, ChoiceGenerator<T> cg, T dummyVal){
+  static <MISSING> T registerChoiceGenerator(MJIEnv env, SystemState ss, ThreadInfo ti, ChoiceGenerator<T> cg,
+  T dummyVal) {
 
     int n = cg.getTotalNumberOfChoices();
     if (n == 0) {
@@ -367,8 +365,8 @@ public class JPF_gov_nasa_jpf_vm_Verify extends NativePeer {
 
     return dummyVal;
   }
-
-  static <T,C extends ChoiceGenerator<T>> T getNextChoice (SystemState ss, String id, Class<C> cgClass, Class<T> choiceClass){
+  static <MISSING, MISSING extends ChoiceGenerator<T>> T getNextChoice(SystemState ss, String id, Class<C> cgClass,
+  Class<T> choiceClass) {
     ChoiceGenerator<?> cg = ss.getCurrentChoiceGenerator(id, cgClass);
 
     assert (cg != null) : "no ChoiceGenerator of type " + cgClass.getName();
@@ -1280,4 +1278,5 @@ public class JPF_gov_nasa_jpf_vm_Verify extends NativePeer {
     
     log( logger, logLevel, msg);
   }
+  
 }

@@ -34,8 +34,8 @@ import gov.nasa.jpf.util.RunRegistry;
 public class JPF_java_lang_reflect_Constructor extends NativePeer {
   
   static MethodInfoRegistry registry;
-  
-  public static boolean init (Config conf) {
+  @Override
+  public static boolean init(Config conf) {
     // this is an example of how to handle cross-initialization between
     // native peers - this might also get explicitly called by the java.lang.Class
     // peer, since it creates Constructor objects. Here we have to make sure
@@ -220,4 +220,5 @@ public class JPF_java_lang_reflect_Constructor extends NativePeer {
     MethodInfo ctor = getMethodInfo(env, objRef);
     return ctor.getClassName().hashCode();
   }
+  
 }

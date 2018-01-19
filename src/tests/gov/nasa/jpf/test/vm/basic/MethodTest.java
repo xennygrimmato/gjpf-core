@@ -87,8 +87,8 @@ class TestMethodBase extends TestJPF implements TMI {
 public class MethodTest extends TestMethodBase {
   
   int data;
-  
-  static void taz () {
+  @Override
+  static void taz() {
     sData = 9;
   }
   
@@ -124,8 +124,8 @@ public class MethodTest extends TestMethodBase {
   public void gna () {
     baseData = 45;
   }
-  
-  int priv () {
+  @Override
+  int priv() {
     return 8;
   }
   
@@ -255,4 +255,5 @@ public class MethodTest extends TestMethodBase {
       assert a.foo() == 1 : "wrong A.foo() called for A1";
     }
   }
+  
 }

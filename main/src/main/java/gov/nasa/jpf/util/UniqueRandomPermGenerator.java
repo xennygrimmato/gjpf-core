@@ -35,13 +35,13 @@ public class UniqueRandomPermGenerator extends RandomPermutationGenerator {
     visited = new SortedArrayIntSet();
     this.nPermutations = Math.min( TotalPermutationGenerator.computeNumberOfPermutations(nElements), nPermutations);
   }
-  
-  public void reset(){
+  @Override
+  public void reset() {
     super.reset();
     visited = new SortedArrayIntSet();
   }
-    
-  public int[] next(){    
+  @Override
+  public int[] next() {    
     while (nGenerated < nPermutations){
       int[] p = super.next();
       int h = OATHash.hash(p);
@@ -54,4 +54,5 @@ public class UniqueRandomPermGenerator extends RandomPermutationGenerator {
     }
     throw new NoSuchElementException();
   }
+  
 }

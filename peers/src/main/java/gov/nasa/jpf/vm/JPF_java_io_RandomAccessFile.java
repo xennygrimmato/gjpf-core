@@ -35,8 +35,8 @@ public class JPF_java_io_RandomAccessFile extends NativePeer {
 	// we do update the length in the local object, but not the data
 		
 	static HashMap<Integer, Integer> File2DataMap;
-	
-  public static boolean init (Config conf) {
+	@Override
+	public static boolean init(Config conf) {
     File2DataMap = new HashMap<Integer, Integer>();
     return (File2DataMap != null);
   } 
@@ -214,7 +214,7 @@ public class JPF_java_io_RandomAccessFile extends NativePeer {
     int bit_shift = 8 * (offset % INT_SIZE);
     int int_array = env.getReferenceField(chunk_obj, data);
     return (byte) (env.getIntArrayElement(int_array, index) >> bit_shift);
-
   }
-}
 
+  
+}

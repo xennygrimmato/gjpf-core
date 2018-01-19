@@ -32,8 +32,8 @@ public class JPF_java_lang_reflect_Field extends NativePeer {
   static final int NREG = 64;
   static FieldInfo[] registered;
   static int nRegistered;
-  
-  public static boolean init (Config conf){
+  @Override
+  public static boolean init(Config conf) {
     registered = new FieldInfo[NREG];
     nRegistered = 0;
     return true;
@@ -844,4 +844,5 @@ public class JPF_java_lang_reflect_Field extends NativePeer {
   public int getDeclaredAnnotations_____3Ljava_lang_annotation_Annotation_2 (MJIEnv env, int objRef){
     return getAnnotations_____3Ljava_lang_annotation_Annotation_2(env, objRef);
   }
+  
 }

@@ -156,8 +156,8 @@ public final class StaticElementInfo extends ElementInfo {
     ClassInfo ci = getClassInfo();
     return ci.getStaticField(fname);
   }
-  
-  protected void checkFieldInfo (FieldInfo fi) {
+  @Override
+  protected void checkFieldInfo(FieldInfo fi) {
     if (getClassInfo() != fi.getClassInfo()) {
       throw new JPFException("wrong static FieldInfo : " + fi.getName()
           + " , no such field in class " + getClassInfo().getName());
@@ -213,7 +213,8 @@ public final class StaticElementInfo extends ElementInfo {
     assert fi.isReference();
     Heap heap = VM.getVM().getHeap();
     return heap.get(getIntField(fi));
+
   }
 
+  
 }
-

@@ -29,9 +29,8 @@ import java.util.ArrayList;
 public class JPF_java_lang_reflect_Method extends NativePeer {
 
   static MethodInfoRegistry registry;
-
-  // class init - this is called automatically from the NativePeer ctor
-  public static boolean init (Config conf) {
+  @Override
+  public static boolean init(Config conf) {
     // this is an example of how to handle cross-initialization between
     // native peers - this might also get explicitly called by the java.lang.Class
     // peer, since it creates Method objects. Here we have to make sure
@@ -651,4 +650,5 @@ public class JPF_java_lang_reflect_Method extends NativePeer {
     MethodInfo mi = getMethodInfo(env, objRef);
     return mi.getClassName().hashCode() ^ mi.getName().hashCode();
   }
+  
 }

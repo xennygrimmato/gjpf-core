@@ -54,7 +54,7 @@ public class MethodTest extends TestJPF {
   }
 
   static class SubC extends SupC {
-
+    @Override
     public int privateMethod() {
       return 42;
     }
@@ -678,9 +678,10 @@ public class MethodTest extends TestJPF {
       } catch (Throwable t){
         t.printStackTrace();
         fail("retrieving parameter annotation failed: " + t);
-      }
 
+      }
     }
+  
   }
   
 }
