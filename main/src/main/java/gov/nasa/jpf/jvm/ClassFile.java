@@ -56,28 +56,7 @@ public class ClassFile extends BinaryClassSource {
   public static final int REF_INVOKESPECIAL = 7;
   public static final int REF_NEW_INVOKESPECIAL = 8;
   public static final int REF_INVOKEINTERFACE = 9;
-
-  // used to store types in cpValue[]
-  public static enum CpInfo {
-    Unused_0,                 // 0
-    ConstantUtf8,             // 1
-    Unused_2,                 // 2
-    ConstantInteger,          // 3
-    ConstantFloat,            // 4
-    ConstantLong,             // 5
-    ConstantDouble,           // 6
-    ConstantClass,            // 7
-    ConstantString,           // 8
-    FieldRef,                 // 9
-    MethodRef,                // 10
-    InterfaceMethodRef,       // 11
-    NameAndType,              // 12
-    Unused_13,
-    Unused_14,
-    MethodHandle,             // 15
-    MethodType,               // 16
-    Unused_17,
-    InvokeDynamic             // 18
+  public static class s {
   }
 
   // <2do> this is going away
@@ -878,11 +857,8 @@ public class ClassFile extends BinaryClassSource {
       // nothing, just a control exception to shortcut the classfile parsing
     }
   }
-
-
-  //--- constpool parsing
-
-  public static String readModifiedUTF8String( byte[] data, int pos, int len) throws ClassParseException {
+@Override
+public static String readModifiedUTF8String(byte[] data, int pos, int len) throws ClassParseException {
     
     int n = 0; // the number of chars in buf
     char[] buf = new char[len]; // it can't be more, but it can be less chars
@@ -2730,6 +2706,7 @@ public class ClassFile extends BinaryClassSource {
       }
     }
     return defaultOffset;
-  }
 
+  }
+  
 }

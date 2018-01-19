@@ -33,8 +33,8 @@ import java.util.HashMap;
 public class JPF_java_text_Format extends NativePeer {
 
   static HashMap<Integer,Format> formatters;
-
-  public static boolean init (Config conf){
+  @Override
+  public static boolean init(Config conf) {
     formatters = new HashMap<Integer,Format>();
     return true;
   }
@@ -49,7 +49,8 @@ public class JPF_java_text_Format extends NativePeer {
     
     int id = env.getIntField(objref,  "id");
     return formatters.get(id);
-  }
 
+  
+  }
   
 }

@@ -35,8 +35,8 @@ public class JPF_java_lang_Class extends NativePeer {
   static final String FIELD_CLASSNAME = "java.lang.reflect.Field";
   static final String METHOD_CLASSNAME = "java.lang.reflect.Method";
   static final String CONSTRUCTOR_CLASSNAME = "java.lang.reflect.Constructor";
-  
-  public static boolean init (Config conf){
+  @Override
+  public static boolean init(Config conf) {
     // we create Method and Constructor objects, so we better make sure these
     // classes are initialized (they already might be)
     JPF_java_lang_reflect_Method.init(conf);
@@ -943,4 +943,5 @@ public class JPF_java_lang_Class extends NativePeer {
 
     return env.newString(rname);
   }
+  
 }

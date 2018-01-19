@@ -602,8 +602,8 @@ public class JVMClassInfo extends ClassInfo {
   protected static boolean nestedInit;
   protected static StringSetMatcher includeNestedInit;
   protected static StringSetMatcher excludeNestedInit;
-
-  protected static boolean init (Config config){
+  @Override
+  protected static boolean init(Config config) {
     nestedInit = config.getBoolean("jvm.nested_init", false);
     if (nestedInit){
       includeNestedInit =  StringSetMatcher.getNonEmpty(config.getStringArray("jvm.nested_init.include"));
@@ -945,6 +945,7 @@ public class JVMClassInfo extends ClassInfo {
     setRunStartCode( miDirect, miRun);
     
     return new JVMDirectCallStackFrame( miDirect, miRun);
+  
   }
   
 }
