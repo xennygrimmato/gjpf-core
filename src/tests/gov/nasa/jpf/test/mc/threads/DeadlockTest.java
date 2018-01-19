@@ -240,7 +240,7 @@ public class DeadlockTest extends TestJPF {
             synchronized (sig) {
               synchronized (lock) {
               }
-              sig.notify();
+              sig.notifyAll();
             }
           }
           System.out.println("t2 finished");
@@ -275,7 +275,7 @@ public class DeadlockTest extends TestJPF {
         @Override
 		public void run() {
           synchronized (sig) {
-            sig.notify();
+              sig.notifyAll();
           }
           System.out.println("t2 finished");
         }
@@ -390,6 +390,7 @@ public class DeadlockTest extends TestJPF {
       };
       t.start();
       System.out.println("# main thread terminating");
+      }
     }
-  }
+    
 }

@@ -57,7 +57,7 @@ public class BoundedBuffer {
     //System.out.println("PUT from " + Thread.currentThread().getName());
     ++count;
     in = (in + 1) % size;
-    notify(); // if this is not a notifyAll() we might notify the wrong waiter
+    notifyAll(); // if this is not a notifyAll() we might notify the wrong waiter
   }
 
   public synchronized Object get() throws InterruptedException {
@@ -69,7 +69,7 @@ public class BoundedBuffer {
     //System.out.println("GET from " + Thread.currentThread().getName());
     --count;
     out = (out + 1) % size;
-    notify(); // if this is not a notifyAll() we might notify the wrong waiter
+    notifyAll(); // if this is not a notifyAll() we might notify the wrong waiter
     return (o);
   }
   
@@ -137,7 +137,8 @@ public class BoundedBuffer {
       N_PRODUCERS = Integer.parseInt(args[1]);      
     }
     if (args.length > 2){
-      N_CONSUMERS = Integer.parseInt(args[2]);      
+      N_CONSUMERS = Integer.parseInt(args[2]);
     }
   }
+  
 }

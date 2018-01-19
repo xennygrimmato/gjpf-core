@@ -318,7 +318,7 @@ public class JoinTest extends TestJPF {
 
         synchronized (t){
           System.out.println("main notifying");
-          t.notify();
+          t.notifyAll();
         }
 
         Verify.printPathOutput("main termination");
@@ -692,14 +692,14 @@ public class JoinTest extends TestJPF {
             t1.wait();
 
             System.out.println("main notifying t1");
-            t1.notify();
+            t1.notifyAll();
           }
 
           System.out.println("main joining t1");
           t1.join();
 
           System.out.println("main notifying t2");
-          t2.notify();
+          t2.notifyAll();
 
           System.out.println("main joining t2");
           t2.join();
@@ -713,4 +713,5 @@ public class JoinTest extends TestJPF {
       Verify.printPathOutput("main termination");
     }
   }
+  
 }

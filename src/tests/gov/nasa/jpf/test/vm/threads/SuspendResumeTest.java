@@ -161,7 +161,7 @@ public class SuspendResumeTest extends TestJPF {
         t3.suspend();
         
         System.out.println("main notifying t3");
-        t3.notify();
+        t3.notifyAll();
         // t3 should be still suspended, despite being notified
       }
     }    
@@ -184,7 +184,7 @@ public class SuspendResumeTest extends TestJPF {
         t3.suspend();
         
         System.out.println("main notifying t3");
-        t3.notify();
+        t3.notifyAll();
         // t3 should be still suspended, despite being notified
         
         System.out.println("main resuming t3");
@@ -280,4 +280,5 @@ public class SuspendResumeTest extends TestJPF {
       System.out.println("main terminating after t4.join");
     }
   }
+  
 }
