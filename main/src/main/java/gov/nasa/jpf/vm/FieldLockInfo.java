@@ -37,8 +37,7 @@ import java.util.logging.Logger;
 public abstract class FieldLockInfo implements Cloneable  {
   
   static Logger log = JPF.getLogger("gov.nasa.jpf.vm.FieldLockInfo");
-  
-  static protected final FieldLockInfo empty = new EmptyFieldLockInfo();
+  protected static final FieldLockInfo empty = new EmptyFieldLockInfo();
     
   protected ThreadInfo tiLastCheck; // the thread this FieldLockInfo was last checked for
 
@@ -158,5 +157,6 @@ class EmptyFieldLockInfo extends FieldLockInfo {
   public String toString() {
     return "EmptyFieldLockInfo";
   }
-}
 
+  
+}

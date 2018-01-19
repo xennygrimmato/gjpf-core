@@ -28,7 +28,7 @@ import org.junit.Test;
  * regression test for java.lang.Integer
  */
 public class BoxObjectCacheTest extends TestJPF {
-  private final static String[] JPF_ARGS = { "+vm.cache.low_byte=-100",
+  private static final String[] JPF_ARGS = { "+vm.cache.low_byte=-100",
                                              "+vm.cache.high_byte=100",
                                              "+vm.cache.high_char=100",
                                              "+vm.cache.low_short=-100",
@@ -205,4 +205,5 @@ public class BoxObjectCacheTest extends TestJPF {
       assertTrue( b1 == b3);
     }
   }
+  
 }

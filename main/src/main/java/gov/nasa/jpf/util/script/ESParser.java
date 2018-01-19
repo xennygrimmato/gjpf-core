@@ -36,11 +36,11 @@ import java.util.Map;
  */
 
 public class ESParser {
-
-  /**** our keywords ****/
-  final public static String K_REPEAT = "REPEAT";
-  final public static String K_ANY = "ANY";
-  final public static String K_SECTION = "SECTION";
+  /**
+  */
+  public static final String K_REPEAT = "REPEAT";
+public static final String K_ANY = "ANY";
+public static final String K_SECTION = "SECTION";
 
   String file;
   StreamTokenizer scanner;
@@ -431,4 +431,4 @@ public class ESParser {
     //tokenize(args[0]);
     showScript(args[0]);
   }
-}
+  

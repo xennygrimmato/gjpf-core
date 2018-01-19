@@ -184,18 +184,16 @@ implements java.io.Serializable, Comparable<String>, CharSequence {
 		}
 		return value[index];
 	}
-
-	native public int codePointAt(int index);
-	native public int codePointBefore(int index);
-	native public int codePointCount(int beginIndex, int endIndex);
-	native public int offsetByCodePoints(int index, int codePointOffset);
-	native public void getChars(int srcBegin, int srcEnd, char dst[], int dstBegin);
+	public native int codePointAt(int index);
+	public native int codePointBefore(int index);
+	public native int codePointCount(int beginIndex, int endIndex);
+	public native int offsetByCodePoints(int index, int codePointOffset);
+	public native void getChars(int srcBegin, int srcEnd, char dst[], int dstBegin);
 	native void getChars(char dst[], int dstBegin);
 
 	@Deprecated
 	native public void getBytes(int srcBegin, int srcEnd, byte dst[], int dstBegin);
-	native public byte[] getBytes(String charsetName)
-			throws UnsupportedEncodingException;
+	public native byte[] getBytes(String charsetName) throws UnsupportedEncodingException;
 
 	public byte[] getBytes(Charset x){
 		// No Charset model.
@@ -204,8 +202,7 @@ implements java.io.Serializable, Comparable<String>, CharSequence {
 		}
 		return StringCoding.encode(x, value, 0, value.length);
 	}
-
-	native public byte[] getBytes();
+	public native byte[] getBytes();
 	@Override
 	native public boolean equals(Object anObject);
 	public boolean contentEquals(StringBuffer stringBuffer){
@@ -214,8 +211,7 @@ implements java.io.Serializable, Comparable<String>, CharSequence {
 			return contentEquals((CharSequence) stringBuffer);
 		}
 	}
-
-  native static boolean equals0 (char[] a, char[] b, int len);
+	static native boolean equals0(char[] a, char[] b, int len);
   
   /**
    * we can't turn this into a native method at top level since it would require a bunch
@@ -245,8 +241,7 @@ implements java.io.Serializable, Comparable<String>, CharSequence {
     }
 		return true;
 	}
-
-	native public boolean equalsIgnoreCase(String anotherString);
+public native boolean equalsIgnoreCase(String anotherString);
 	@Override
 	native public int compareTo(String anotherString);
 
@@ -260,15 +255,13 @@ implements java.io.Serializable, Comparable<String>, CharSequence {
 			return MJIcompare(s1,s2);
 		}
 	}
-
-	native private static int MJIcompare(String s1,String s2);
+	private static native int MJIcompare(String s1, String s2);
 	public int compareToIgnoreCase(String str) {
 		return CASE_INSENSITIVE_ORDER.compare(this, str);
 	}
-
-	native public boolean regionMatches(int toffset, String other, int ooffset, int len);
-	native public boolean regionMatches(boolean ignoreCase, int toffset, String other, int ooffset, int len);
-	native public boolean startsWith(String prefix, int toffset);
+	public native boolean regionMatches(int toffset, String other, int ooffset, int len);
+	public native boolean regionMatches(boolean ignoreCase, int toffset, String other, int ooffset, int len);
+	public native boolean startsWith(String prefix, int toffset);
 	public boolean startsWith(String prefix) {
 		return startsWith(prefix, 0);
 	}
@@ -282,51 +275,51 @@ implements java.io.Serializable, Comparable<String>, CharSequence {
 	public int indexOf(int ch) {
 		return indexOf(ch, 0);
 	}
-	native public int indexOf(int ch, int fromIndex);
-	native public int lastIndexOf(int ch);
-	native public int lastIndexOf(int ch, int fromIndex);
-	native public int indexOf(String str);
-	native public int indexOf(String str, int fromIndex);
+	public native int indexOf(int ch, int fromIndex);
+	public native int lastIndexOf(int ch);
+	public native int lastIndexOf(int ch, int fromIndex);
+	public native int indexOf(String str);
+	public native int indexOf(String str, int fromIndex);
 
 	public int lastIndexOf(String str) {
 		return lastIndexOf(str, value.length);
 	}
-	native public int lastIndexOf(String str, int fromIndex);
-	native public String substring(int beginIndex);
-	native public String substring(int beginIndex, int endIndex);
+	public native int lastIndexOf(String str, int fromIndex);
+	public native String substring(int beginIndex);
+	public native String substring(int beginIndex, int endIndex);
 	@Override
 	public CharSequence subSequence(int beginIndex, int endIndex) {
 		return this.substring(beginIndex, endIndex);
 	}
-	native public String concat(String str);
-	native public String replace(char oldChar, char newChar);
-	native public boolean matches(String regex);
+	public native String concat(String str);
+	public native String replace(char oldChar, char newChar);
+	public native boolean matches(String regex);
 	public boolean contains(CharSequence charSequence) {
 		// No CharSequence model
 		return indexOf(charSequence.toString()) > -1;
 	}
-	native public String replaceFirst(String regex, String replacement);
-	native public String replaceAll(String regex, String replacement);
+	public native String replaceFirst(String regex, String replacement);
+	public native String replaceAll(String regex, String replacement);
 	public String replace(CharSequence target, CharSequence other) {
 		// No CharSequence model
 		int PATTERN= 0x10;
 		Matcher pattern=Pattern.compile(target.toString(), PATTERN).matcher(this);
 		return pattern.replaceAll(Matcher.quoteReplacement(other.toString()));
 	}
-	native public String[] split(String regex, int limit);
-	native public String[] split(String regex);
-	native public String toLowerCase(Locale locale);
-	native public String toLowerCase();
-	native public String toUpperCase(Locale locale);
-	native public String toUpperCase();
-	native public String trim();
+	public native String[] split(String regex, int limit);
+	public native String[] split(String regex);
+	public native String toLowerCase(Locale locale);
+	public native String toLowerCase();
+	public native String toUpperCase(Locale locale);
+	public native String toUpperCase();
+	public native String trim();
 	@Override
 	public String toString() {
 		return this;
 	}
-	native public char[] toCharArray();
-	native public static String format(String format, Object... args);
-	native public static String format(Locale l, String format, Object... args);
+	public native char[] toCharArray();
+	public static native String format(String format, Object... args);
+	public static native String format(Locale l, String format, Object... args);
 	public static String valueOf(Object x){
 		// can't translate arbitrary object
 		return (x == null) ? "null" : x.toString();
@@ -350,10 +343,10 @@ implements java.io.Serializable, Comparable<String>, CharSequence {
 		char data[] = {character};
 		return new String(data);
 	}
-	native public static String valueOf(int i);
-	native public static String valueOf(long l);
-	native public static String valueOf(float f);
-	native public static String valueOf(double d);
+	public static native String valueOf(int i);
+	public static native String valueOf(long l);
+	public static native String valueOf(float f);
+	public static native String valueOf(double d);
 	public native String intern();
 
   
@@ -368,5 +361,6 @@ implements java.io.Serializable, Comparable<String>, CharSequence {
   // used internally by Android's java.lang.AbstractStringBuffer
   void _getChars(int start, int end, char[] buffer, int index) {
     System.arraycopy(value, start, buffer, index, end - start);
-  }
+	}
+	
 }

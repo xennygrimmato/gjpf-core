@@ -56,28 +56,7 @@ public class ClassFile extends BinaryClassSource {
   public static final int REF_INVOKESPECIAL = 7;
   public static final int REF_NEW_INVOKESPECIAL = 8;
   public static final int REF_INVOKEINTERFACE = 9;
-
-  // used to store types in cpValue[]
-  public static enum CpInfo {
-    Unused_0,                 // 0
-    ConstantUtf8,             // 1
-    Unused_2,                 // 2
-    ConstantInteger,          // 3
-    ConstantFloat,            // 4
-    ConstantLong,             // 5
-    ConstantDouble,           // 6
-    ConstantClass,            // 7
-    ConstantString,           // 8
-    FieldRef,                 // 9
-    MethodRef,                // 10
-    InterfaceMethodRef,       // 11
-    NameAndType,              // 12
-    Unused_13,
-    Unused_14,
-    MethodHandle,             // 15
-    MethodType,               // 16
-    Unused_17,
-    InvokeDynamic             // 18
+  public static class s {
   }
 
   // <2do> this is going away
@@ -155,8 +134,7 @@ public class ClassFile extends BinaryClassSource {
 
   //--- standard field attributes
   public static final String CONST_VALUE_ATTR = "ConstantValue";
-
-  protected final static String[] stdFieldAttrs = {
+  protected static final String[] stdFieldAttrs = {
     CONST_VALUE_ATTR, SYNTHETIC_ATTR, DEPRECATED_ATTR, SIGNATURE_ATTR,
     RUNTIME_INVISIBLE_ANNOTATIONS_ATTR, RUNTIME_VISIBLE_ANNOTATIONS_ATTR, RUNTIME_VISIBLE_TYPE_ANNOTATIONS_ATTR };
 
@@ -167,8 +145,7 @@ public class ClassFile extends BinaryClassSource {
   public static final String RUNTIME_INVISIBLE_PARAMETER_ANNOTATIONS_ATTR = "RuntimeInvisibleParameterAnnotations";
   public static final String RUNTIME_VISIBLE_PARAMETER_ANNOTATIONS_ATTR = "RuntimeVisibleParameterAnnotations";
   public static final String ANNOTATIONDEFAULT_ATTR = "AnnotationDefault";
-
-  protected final static String[] stdMethodAttrs = { 
+  protected static final String[] stdMethodAttrs = { 
     CODE_ATTR, EXCEPTIONS_ATTR, SYNTHETIC_ATTR, DEPRECATED_ATTR, SIGNATURE_ATTR,
     RUNTIME_INVISIBLE_ANNOTATIONS_ATTR, RUNTIME_VISIBLE_ANNOTATIONS_ATTR,
     RUNTIME_INVISIBLE_PARAMETER_ANNOTATIONS_ATTR,
@@ -181,8 +158,7 @@ public class ClassFile extends BinaryClassSource {
   //--- standard code attributes
   public static final String LINE_NUMBER_TABLE_ATTR = "LineNumberTable";
   public static final String LOCAL_VAR_TABLE_ATTR = "LocalVariableTable";
-
-  protected final static String[] stdCodeAttrs = { LINE_NUMBER_TABLE_ATTR, LOCAL_VAR_TABLE_ATTR, RUNTIME_VISIBLE_TYPE_ANNOTATIONS_ATTR };
+  protected static final String[] stdCodeAttrs = { LINE_NUMBER_TABLE_ATTR, LOCAL_VAR_TABLE_ATTR, RUNTIME_VISIBLE_TYPE_ANNOTATIONS_ATTR };
 
 
   //--- standard class attributes
@@ -190,8 +166,7 @@ public class ClassFile extends BinaryClassSource {
   public static final String  INNER_CLASSES_ATTR = "InnerClasses";
   public static final String  ENCLOSING_METHOD_ATTR = "EnclosingMethod";
   public static final String  BOOTSTRAP_METHOD_ATTR = "BootstrapMethods";
-  
-  protected final static String[] stdClassAttrs = {
+  protected static final String[] stdClassAttrs = {
     SOURCE_FILE_ATTR, DEPRECATED_ATTR, INNER_CLASSES_ATTR, DEPRECATED_ATTR, SIGNATURE_ATTR,
     RUNTIME_INVISIBLE_ANNOTATIONS_ATTR, RUNTIME_VISIBLE_ANNOTATIONS_ATTR, RUNTIME_VISIBLE_TYPE_ANNOTATIONS_ATTR,
     ENCLOSING_METHOD_ATTR, BOOTSTRAP_METHOD_ATTR };
@@ -2730,6 +2705,7 @@ public class ClassFile extends BinaryClassSource {
       }
     }
     return defaultOffset;
-  }
 
+  }
+  
 }

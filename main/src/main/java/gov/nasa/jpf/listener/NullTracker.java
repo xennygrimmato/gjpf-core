@@ -57,8 +57,7 @@ import java.io.PrintWriter;
  * to explain NPEs
  */
 public class NullTracker extends ListenerAdapter {
-
-  public static abstract class NullSource {
+  public abstract static class NullSource {
     protected InstructionInterface insn;
     protected ThreadInfo ti;
     protected ElementInfo ei;
@@ -337,4 +336,5 @@ public class NullTracker extends ListenerAdapter {
       nullSource.printOn(pw);
     }
   }
+  
 }

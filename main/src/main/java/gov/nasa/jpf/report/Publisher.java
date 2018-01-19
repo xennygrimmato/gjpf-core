@@ -189,8 +189,7 @@ public abstract class Publisher {
   **/
 
   static char[] tBuf = { '0', '0', ':', '0', '0', ':', '0', '0' };
-  
-  static synchronized public String formatHMS (long t) {
+public static synchronized String formatHMS(long t) {
     int h = (int) (t / 3600000);
     int m = (int) ((t / 60000) % 60);
     int s = (int) ((t / 1000) % 60);
@@ -371,7 +370,9 @@ public abstract class Publisher {
   protected void publishTrace() {}
   protected void publishOutput() {}
   protected void publishSnapshot() {}
-  protected void publishStatistics() {}
+  protected void publishStatistics() {
 
-  //--- internal helpers
+    //--- internal helpers
+}
+  
 }

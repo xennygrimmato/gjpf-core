@@ -129,16 +129,12 @@ public class FinalBreakTest extends TestJPF {
       }
     }
   }
-
-  
-  //--- breaks on static finals
-  
-  final static Object o1 = new Object();
-  final static Object o2 = new Object();
+  static final Object o1 = new Object();
+  static final Object o2 = new Object();
   
   static class StaticFinal {
-    final static Object a = o1;
-    final static Object b = o1;
+    static final Object a = o1;
+    static final Object b = o1;
   }
 
   void startStaticFinal(){
@@ -194,6 +190,7 @@ public class FinalBreakTest extends TestJPF {
           throw new RuntimeException("caught " + x);
       }
     }
+  
   }
   
 }

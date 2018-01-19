@@ -36,8 +36,8 @@ import java.util.Iterator;
  * synchronized
  */
 public final class DynamicIntArray implements Iterable<Integer> {
-  final static int DEFAULT_CHUNKBITS = 8;
-  final static int INIT_CHUNKS = 16;
+  static final int DEFAULT_CHUNKBITS = 8;
+  static final int INIT_CHUNKS = 16;
 
   class DynIntIterator implements Iterator<Integer> {
     int i;
@@ -162,10 +162,9 @@ public final class DynamicIntArray implements Iterable<Integer> {
   @Override
   public Iterator<Integer> iterator() {
     return new DynIntIterator();
-  }
 
 
-  /**************************** debug & test ************
+    /**************************** debug & test ************
   public void dump () {
     int i, j;
     for (i=0; i<data.length; i++) {
@@ -206,3 +205,5 @@ public final class DynamicIntArray implements Iterable<Integer> {
   ***************************** end debug & test *********/
 }
 
+  
+}

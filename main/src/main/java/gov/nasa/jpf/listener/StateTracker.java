@@ -31,10 +31,10 @@ public class StateTracker extends ListenerAdapter {
 
   private final PrintWriter out;
   private final int logPeriod;
-  volatile private String operation;
-  volatile private String detail;
-  volatile private int depth;
-  volatile private int id;
+  private volatile String operation;
+  private volatile String detail;
+  private volatile int depth;
+  private volatile int id;
 
   public StateTracker (Config conf, JPF jpf) {
     out = new PrintWriter(System.out, true);
@@ -118,6 +118,7 @@ public class StateTracker extends ListenerAdapter {
   @Override
   public void searchFinished(Search search) {
     out.println("----------------------------------- search finished");
-  }
 
+  }
+  
 }

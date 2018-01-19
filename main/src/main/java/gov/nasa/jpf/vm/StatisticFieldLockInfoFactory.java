@@ -161,11 +161,7 @@ public class StatisticFieldLockInfoFactory implements FieldLockInfoFactory {
 
     return -1;
   }
-
-  
-  
-  //--- root for our concrete FieldLockInfo classes
-  static abstract class StatisticFieldLockInfo extends FieldLockInfo {
+abstract static class StatisticFieldLockInfo extends FieldLockInfo {
     int checkLevel;
 
     @Override
@@ -372,6 +368,6 @@ public class StatisticFieldLockInfoFactory implements FieldLockInfoFactory {
       sb.append("]}");
 
       return sb.toString();
-    }
-  }  
-}
+    }  
+  }
+  

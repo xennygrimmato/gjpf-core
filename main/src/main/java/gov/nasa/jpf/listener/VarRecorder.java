@@ -243,15 +243,13 @@ public class VarRecorder extends ListenerAdapter {
 
     return (decodeType(type));
   }
-
-  private final static byte getTypeFromInstruction(Instruction inst) {
+  private static final byte getTypeFromInstruction(Instruction inst) {
     if (inst instanceof JVMArrayElementInstruction)
       return(getTypeFromInstruction((JVMArrayElementInstruction) inst));
 
     return(Types.T_VOID);
   }
-
-  private final static byte getTypeFromInstruction(JVMArrayElementInstruction inst) {
+  private static final byte getTypeFromInstruction(JVMArrayElementInstruction inst) {
     String name;
 
     name = inst.getClass().getName();
@@ -270,8 +268,7 @@ public class VarRecorder extends ListenerAdapter {
 
     return(Types.T_VOID);
   }
-
-  private final static String encodeType(byte type) {
+  private static final String encodeType(byte type) {
     switch (type) {
       case Types.T_BYTE:    return("B");
       case Types.T_CHAR:    return("C");
@@ -288,8 +285,7 @@ public class VarRecorder extends ListenerAdapter {
 
     return("?");
   }
-
-  private final static byte decodeType(String type) {
+  private static final byte decodeType(String type) {
     if (type.charAt(0) == '?'){
       return(Types.T_REFERENCE);
     } else {
@@ -367,8 +363,7 @@ public class VarRecorder extends ListenerAdapter {
 
     return(ti.getTopFrame().peek(offset));
   }
-
-  private final static int calcOffset(byte type, boolean store) {
+  private static final int calcOffset(byte type, boolean store) {
     if (!store)
       return(0);
 
@@ -385,8 +380,7 @@ public class VarRecorder extends ListenerAdapter {
 
     return(decodeValue(type, lo, hi));
   }
-
-  private final static String decodeValue(byte type, int lo, int hi) {
+  private static final String decodeValue(byte type, int lo, int hi) {
     switch (type) {
       case Types.T_ARRAY:   return(null);
       case Types.T_VOID:    return(null);
@@ -417,6 +411,7 @@ public class VarRecorder extends ListenerAdapter {
       default:
         System.err.println("Unknown type: " + type);
         return(null);
-     }
+    }
   }
+  
 }

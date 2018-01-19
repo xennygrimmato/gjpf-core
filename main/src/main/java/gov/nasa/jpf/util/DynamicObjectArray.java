@@ -18,29 +18,9 @@
 package gov.nasa.jpf.util;
 
 import java.util.Iterator;
-
-/**
- * simplistic Object array that differentiates from ArrayList by
- * using chunks instead of exponential growth, thus efficiently dealing
- * with huge, potentially sparse arrays
- *
- * the motivation for this class is memory optimization, i.e. space efficient
- * storage of potentially huge arrays without good a-priori size guesses
- *
- * this class is awfully lifted from DynamicIntArray (same motivation, but
- * primitive types - not much factorizable functionality w/o excessive
- * casting/boxing)
- *
- * the API of this class is between a primitive array and a AbstractList. Since
- * it handles Objects, we could turn this into a Collection (and probably should)
- *
- * NOTE: like standard Collection implementations/arrays, this class is not
- * synchronized
- */
-
-public final class DynamicObjectArray<E> implements Iterable<E> {
-  final static int DEFAULT_CHUNKBITS = 8;
-  final static int INIT_CHUNKS = 16;
+public final class DynamicObjectArray<MISSING> implements Iterable<E> {
+  static final int DEFAULT_CHUNKBITS = 8;
+  static final int INIT_CHUNKS = 16;
 
   /** growth strategy */
   Growth growth;
@@ -161,7 +141,8 @@ public final class DynamicObjectArray<E> implements Iterable<E> {
     sb.append('}');
 
     return sb.toString();
-  }
 
-  // removed toArray method, which is confusing for 1.5
+    // removed toArray method, which is confusing for 1.5
+}
+  
 }

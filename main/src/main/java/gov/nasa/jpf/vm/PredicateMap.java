@@ -25,7 +25,7 @@ public abstract class PredicateMap {
 	public int getRef() {
 		return ref;
 	}
-	abstract public void evaluate();
+	public abstract void evaluate();
+	public abstract String getRep();
 	
-	abstract public String getRep();
 }

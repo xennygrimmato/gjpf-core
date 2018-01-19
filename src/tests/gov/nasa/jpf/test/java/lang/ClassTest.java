@@ -175,8 +175,7 @@ public class ClassTest extends TestJPF implements Cloneable, Serializable {
       clazz.newInstance();
     }
   }
-  
-  static abstract class AbstractClass {
+  abstract static class AbstractClass {
   }
     
   @Test 
@@ -282,8 +281,7 @@ public class ClassTest extends TestJPF implements Cloneable, Serializable {
     void boo();                        // 4
     void foo();
   }
-  
-  static abstract class TestClass extends TestClassBase implements TestIfc {
+  abstract static class TestClass extends TestClassBase implements TestIfc {
     static {
       System.out.println("why is TestClass.<clinit>() executed?");
     }
@@ -376,16 +374,12 @@ public class ClassTest extends TestJPF implements Cloneable, Serializable {
   @Inherited
   public @interface TestAnnotation {
   }
-
   @TestAnnotation()
-  public static class ParentAnnotated<E> {
+  public static class ParentAnnotated<MISSING> {
   }
-
-  public static class ChildAnnotated<E> extends ParentAnnotated {
+  public static class ChildAnnotated<MISSING> extends ParentAnnotated {
   }
-
-  public enum TestEnum{
-    item;
+  public class s {
   }
 
   @TestAnnotation()
@@ -580,6 +574,7 @@ public class ClassTest extends TestJPF implements Cloneable, Serializable {
       assertNull(c.getResource("java/lang/Class.class"));
       assertEquals(c.getResource("Class.class"),c.getResource("/java/lang/Class.class"));
       assertNull(c.getResource("not_existing_resources"));
-    }
-  }  
+    }  
+  }
+  
 }

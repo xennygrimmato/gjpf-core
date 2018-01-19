@@ -334,13 +334,9 @@ System.out.println(i);
     assert n == 351 : "wrong number of visited elements: " + n; // [100-200] + [750-999]
     assert lastSeen : "last element not seen";
   }
-
-
-   //--- the performance sectopm
-
-  final static int MAX_ROUNDS = 1000;
-  final static int MAX_N = 10000;
-  final static int MAX_T = 8;
+  static final int MAX_ROUNDS = 1000;
+  static final int MAX_N = 10000;
+  static final int MAX_T = 8;
 
 
   static void evalSparseClusterArray() {
@@ -401,4 +397,5 @@ System.out.println(i);
     t2 = System.currentTimeMillis();
     System.out.println("HashMap iteration over " + n + " elements: " + (t2 - t1));
   }
+  
 }

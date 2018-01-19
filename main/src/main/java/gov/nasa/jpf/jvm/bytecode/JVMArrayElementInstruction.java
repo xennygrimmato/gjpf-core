@@ -38,10 +38,9 @@ public abstract class JVMArrayElementInstruction extends  ArrayElementInstructio
   // we need this to be abstract because of the LongArrayStore insns
   @Override
   abstract public int peekIndex (ThreadInfo ti);
-  abstract public int peekArrayRef (ThreadInfo ti);
-
-  abstract public Object peekIndexAttr (ThreadInfo ti);
-  abstract public Object peekArrayAttr (ThreadInfo ti);
+  public abstract int peekArrayRef(ThreadInfo ti);
+  public abstract Object peekIndexAttr(ThreadInfo ti);
+  public abstract Object peekArrayAttr(ThreadInfo ti);
 
   public boolean isReferenceArray() {
     return false;

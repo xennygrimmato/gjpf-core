@@ -84,7 +84,6 @@ public class SimpleDateFormat extends DateFormat {
         calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
     }
   }
-
-  native public void applyPattern(String pattern);
+  public native void applyPattern(String pattern);
   
 }

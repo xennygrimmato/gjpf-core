@@ -134,8 +134,7 @@ public abstract class ClassLoader {
     }
     return null;
   }
-
-  public native static ClassLoader getSystemClassLoader ();
+  public static native ClassLoader getSystemClassLoader();
 
   public static URL getSystemResource(String name){
     return getSystemClassLoader().getResource(name);
@@ -158,8 +157,7 @@ public abstract class ClassLoader {
    * returns null.
    */
   protected native final Class<?> findLoadedClass(String name);
-
-  protected native final Class<?> findSystemClass(String name) throws ClassNotFoundException;
+protected final native Class<?> findSystemClass(String name) throws ClassNotFoundException;
 
   public Class<?> loadClass(String name) throws ClassNotFoundException {
     Class<?> c = findLoadedClass(name);
@@ -254,4 +252,5 @@ public abstract class ClassLoader {
                                       throws IllegalArgumentException {
     throw new UnsupportedOperationException();
   }
+  
 }

@@ -67,8 +67,7 @@ public class SystemState {
     ThreadInfo execThread;
     int id;              // the state id
     LinkedHashMap<Object,ClosedMemento> restorers;
-    
-    static protected ChoiceGenerator<?> cloneCG( ChoiceGenerator<?> cg){
+    protected static ChoiceGenerator<?> cloneCG(ChoiceGenerator<?> cg) {
       if (cg != null){
         try {
           return cg.deepClone();
@@ -353,18 +352,14 @@ public class SystemState {
     
     return null;
   }
-  
-  
-  public <T extends ChoiceGenerator<?>> T[] getChoiceGeneratorsOfType (Class<T> cgType) {
+  public <MISSING extends ChoiceGenerator<?>> T[] getChoiceGeneratorsOfType(Class<T> cgType) {
     if (curCg != null){
       return curCg.getAllOfType(cgType);
     } else {
       return null;
     }
   }
-
-
-  public <T extends ChoiceGenerator<?>> T getLastChoiceGeneratorOfType (Class<T> cgType) {
+  public <MISSING extends ChoiceGenerator<?>> T getLastChoiceGeneratorOfType(Class<T> cgType) {
     for (ChoiceGenerator<?> cg = curCg; cg != null; cg = cg.getPreviousChoiceGenerator()){
       if (cgType.isAssignableFrom(cg.getClass())) {
         return (T)cg;
@@ -373,8 +368,7 @@ public class SystemState {
 
     return null;
   }
-
-  public <T> ChoiceGenerator<T> getLastChoiceGeneratorOfChoiceType (String id, Class<T> choiceType){
+  public <MISSING> ChoiceGenerator<T> getLastChoiceGeneratorOfChoiceType(String id, Class<T> choiceType) {
     for (ChoiceGenerator<?> cg = curCg; cg != null; cg = cg.getPreviousChoiceGenerator()){
       if ((id == null || id.equals(cg.getId())) && choiceType.isAssignableFrom(cg.getChoiceType())) {
         return (ChoiceGenerator<T>)cg;
@@ -383,9 +377,7 @@ public class SystemState {
 
     return null;    
   }
-
-  
-  public <T extends ChoiceGenerator<?>> T getCurrentChoiceGeneratorOfType (Class<T> cgType) {
+  public <MISSING extends ChoiceGenerator<?>> T getCurrentChoiceGeneratorOfType(Class<T> cgType) {
     for (ChoiceGenerator<?> cg = curCg; cg != null; cg = cg.getCascadedParent()){
       if (cgType.isAssignableFrom(cg.getClass())){
         return (T)cg;
@@ -394,8 +386,7 @@ public class SystemState {
 
     return null;
   }
-
-  public <T extends ChoiceGenerator<?>> T getCurrentChoiceGenerator (String id, Class<T> cgType) {
+  public <MISSING extends ChoiceGenerator<?>> T getCurrentChoiceGenerator(String id, Class<T> cgType) {
     for (ChoiceGenerator<?> cg = curCg; cg != null; cg = cg.getCascadedParent()){
       if (id.equals(cg.getId()) && cgType.isAssignableFrom(cg.getClass())){
         return (T)cg;
@@ -404,8 +395,7 @@ public class SystemState {
 
     return null;
   }
-  
-  public <T> ChoiceGenerator<T> getCurrentChoiceGeneratorForChoiceType (String id, Class<T> choiceType){
+  public <MISSING> ChoiceGenerator<T> getCurrentChoiceGeneratorForChoiceType(String id, Class<T> choiceType) {
     for (ChoiceGenerator<?> cg = curCg; cg != null; cg = cg.getCascadedParent()){
       if ((id == null || id.equals(cg.getId())) && choiceType.isAssignableFrom(cg.getChoiceType())){
         return (ChoiceGenerator<T>)cg;
@@ -454,9 +444,8 @@ public class SystemState {
   public ChoiceGenerator<?>[] getCurrentChoiceGenerators () {
     return curCg.getCascade();
   }
-
-  
-  public <T extends ChoiceGenerator<?>> T getInsnChoiceGeneratorOfType (Class<T> cgType, Instruction insn, ChoiceGenerator<?> cgPrev){
+  public <MISSING extends ChoiceGenerator<?>> T getInsnChoiceGeneratorOfType(Class<T> cgType, Instruction insn,
+  ChoiceGenerator<?> cgPrev) {
     ChoiceGenerator<?> cg = cgPrev != null ? cgPrev.getPreviousChoiceGenerator() : curCg;
 
     if (cg != null && cg.getInsn() == insn && cgType.isAssignableFrom(cg.getClass())){
@@ -926,10 +915,11 @@ public class SystemState {
     } else {
       trail.incStepCount();
     }
-  }
 
-  // the three primitive ops used from within VM.forward()
+    // the three primitive ops used from within VM.forward()
 
 
 }
 
+  
+}

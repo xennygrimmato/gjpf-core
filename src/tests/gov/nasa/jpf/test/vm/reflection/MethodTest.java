@@ -40,8 +40,7 @@ public class MethodTest extends TestJPF {
   static class Faz {
 
     static int d = 4200;
-    
-    static private int foo (int a){
+    private static int foo(int a) {
       return a + 42;
     }
   }
@@ -678,9 +677,10 @@ public class MethodTest extends TestJPF {
       } catch (Throwable t){
         t.printStackTrace();
         fail("retrieving parameter annotation failed: " + t);
-      }
 
+      }
     }
+  
   }
   
 }

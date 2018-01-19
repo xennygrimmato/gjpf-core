@@ -40,8 +40,7 @@ import gov.nasa.jpf.util.Processor;
  * and associated getters, allocators and iterators
  */
 public abstract class GenericHeap implements Heap, Iterable<ElementInfo> {
-  
-  static abstract class GenericHeapMemento implements Memento<Heap> {
+  abstract static class GenericHeapMemento implements Memento<Heap> {
     // those can be simply copied
     int attributes;
     IntVector pinDownList;
@@ -755,4 +754,5 @@ public abstract class GenericHeap implements Heap, Iterable<ElementInfo> {
       ei.checkConsistency();
     }
   }
+  
 }

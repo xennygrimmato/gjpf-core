@@ -338,13 +338,9 @@ public class PSIntMapTest extends TestJPF {
     }
     assertTrue( n == (max - nRemoved));
   }
-    
-  
-  //--- benchmarks
-  
-  final static int NSTATES = 20000;
-  final static int NOBJECTS = 2000;
-  final static int NGC = 400;
+  static final int NSTATES = 20000;
+  static final int NOBJECTS = 2000;
+  static final int NGC = 400;
   
   
   public void benchmark (){
@@ -439,5 +435,4 @@ public class PSIntMapTest extends TestJPF {
     System.out.println("ObjVector (" + NSTATES + " cycles): " + (t2 - t1));
 
   }
-
-}
+  
