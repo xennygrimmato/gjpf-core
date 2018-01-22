@@ -29,13 +29,8 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
-
-/**
- * class representing a statemachine environment that produces SCEventGenerators
- * from scripts
- */
-public abstract class ScriptEnvironment<CG extends ChoiceGenerator<?>> 
-         implements StateExtensionClient<ScriptEnvironment<CG>.ActiveSnapshot> {
+public abstract class ScriptEnvironment<MISSING extends ChoiceGenerator<?>>
+implements StateExtensionClient<ActiveSnapshot> {
 
   static final String DEFAULT = "default";
 
@@ -209,7 +204,7 @@ public abstract class ScriptEnvironment<CG extends ChoiceGenerator<?>>
       if (e instanceof Section) {
         Section sec = (Section)e;
         List<String> secIds = sec.getIds();
-        if (secIds.size() > 0) {
+        if (!secIds.isEmpty()) {
           for (String id : secIds) {
             sections.put(id, (Section)sec.clone()); // clone to guarantee different identities
           }
@@ -314,6 +309,7 @@ public abstract class ScriptEnvironment<CG extends ChoiceGenerator<?>>
   public void registerListener(JPF jpf) {
     StateExtensionListener<ActiveSnapshot> sel = new StateExtensionListener(this);
     jpf.addSearchListener(sel);
-  }
 
+  }
+  
 }

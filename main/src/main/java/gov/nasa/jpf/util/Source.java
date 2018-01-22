@@ -305,8 +305,7 @@ public class Source {
       l.add(line);
     }
     in.close();
-
-    if (l.size() > 0) {
+    if (!l.isEmpty()) {
       lines = l.toArray(new String[l.size()]);
     }
   }
@@ -332,4 +331,5 @@ public class Source {
   public String getPath() {
     return root.toString() + File.separatorChar + fname;
   }
+  
 }

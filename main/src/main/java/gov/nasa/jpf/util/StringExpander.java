@@ -177,8 +177,7 @@ public class StringExpander {
 
   List<String> addSeq (List<String> list, List<String> seq){
     List<String> result = new LinkedList<String>();
-
-    if (list != null && list.size() > 0){
+    if (list != null && !list.isEmpty()) {
       result.addAll(list);
     }
     result.addAll(seq);
@@ -188,8 +187,7 @@ public class StringExpander {
 
   List<String> addLiteral (List<String> list, String s){
     List<String> result = new LinkedList<String>();
-
-    if (list == null || list.size() == 0){
+    if (list == null || list.isEmpty()) {
       result.add(s);
 
     } else {
@@ -203,8 +201,7 @@ public class StringExpander {
 
   List<String> addAlt (List<String> list, List<String>alt){
     List<String> result = new LinkedList<String>();
-
-    if (list == null || list.size() == 0){
+    if (list == null || list.isEmpty()) {
       result.addAll(alt);
 
     } else {
@@ -220,8 +217,7 @@ public class StringExpander {
 
   List<String> addCat (List<String> list, char[] cat){
     List<String> result = new LinkedList<String>();
-
-    if (list == null || list.size() == 0){
+    if (list == null || list.isEmpty()) {
       for (char c : cat){
         result.add(Character.toString(c));
       }
@@ -351,10 +347,11 @@ public class StringExpander {
 /**/
     for (String s : ex.expand()) {
       System.out.println(s);
-    }
-/**/
+  /**/
 /**
     System.out.println(new String(ex.createCategory(args[0])));
 **/
   }
+  }
+  
 }

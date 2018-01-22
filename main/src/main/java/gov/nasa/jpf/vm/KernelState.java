@@ -144,7 +144,7 @@ public class KernelState implements Restorable<KernelState> {
    * requires re-pushing.
    */
   public void pushChangeListener(ChangeListener cl) {
-    if (cl instanceof IncrementalChangeTracker && listeners.size() > 0) {
+  if (cl instanceof IncrementalChangeTracker && !listeners.isEmpty()) {
       for (ChangeListener l : listeners) {
         if (l instanceof IncrementalChangeTracker) {
           throw new IllegalStateException("Only one IncrementalChangeTracker allowed!");
@@ -175,4 +175,5 @@ public class KernelState implements Restorable<KernelState> {
       sa.cleanUpDanglingReferences(heap);
     }
   }
+  
 }
