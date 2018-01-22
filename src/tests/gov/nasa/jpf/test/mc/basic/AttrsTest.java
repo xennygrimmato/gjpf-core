@@ -186,7 +186,7 @@ public class AttrsTest extends TestJPF {
         String mName = mi.getName();
         if (mName.equals("goModel") || mName.equals("goNative")) {
           Object[] a = call.getArgumentAttrs(ti);
-          assert a != null & a.length == 3;
+          assert a != null && a.length == 3;
 
           System.out.println("listener notified of: " + mName + "(), attributes= "
                              + a[0] + ',' + a[1] + ',' + a[2]);
@@ -541,4 +541,5 @@ public class AttrsTest extends TestJPF {
       foo(42);
     }
   }
+  
 }
