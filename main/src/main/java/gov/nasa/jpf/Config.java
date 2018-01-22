@@ -1085,8 +1085,7 @@ public class Config extends Properties {
   public void removeChangeListener (ConfigChangeListener l) {
     if (changeListeners != null) {
       changeListeners.remove(l);
-      
-      if (changeListeners.size() == 0) {
+      if (changeListeners.isEmpty()) {
         changeListeners = null;
       }
     }
@@ -1478,8 +1477,7 @@ public class Config extends Properties {
       return defaultValues;
     }
   }
-
-  public <T extends Enum<T>> T getEnum( String key, T[] values, T defValue){
+  public <MISSING extends Enum<T>> T getEnum(String key, T[] values, T defValue) {
     String v = getProperty(key);
 
     if (v != null){
@@ -1673,8 +1671,7 @@ public class Config extends Properties {
 
     return null;    
   }
-      
-  public <T> Class<? extends T> getClass(String key, Class<T> type) throws JPFConfigException {
+  public <MISSING> Class<? extends T> getClass(String key, Class<T> type) throws JPFConfigException {
     Class<?> cls = asClass( getProperty(key));
     if (cls != null) {
       if (type.isAssignableFrom(cls)) {
@@ -1751,22 +1748,8 @@ public class Config extends Properties {
 
     return null;
   }
-  
-  /**
-   * this one is used to instantiate objects from a list of keys that share
-   * the same prefix, e.g.
-   * 
-   *  shell.panels = config,site
-   *  shell.panels.site = .shell.panels.SitePanel
-   *  shell.panels.config = .shell.panels.ConfigPanel
-   *  ...
-   * 
-   * note that we specify default class names, not classes, so that the classes
-   * get loaded through our own loader at call time (they might not be visible
-   * to our caller)
-   */
-  public <T> T[] getGroupInstances (String keyPrefix, String keyPostfix, Class<T> type, 
-          String... defaultClsNames) throws JPFConfigException {
+  public <MISSING> T[] getGroupInstances(String keyPrefix, String keyPostfix, Class<T> type,
+  String... defaultClsNames) throws JPFConfigException {
     
     String[] ids = getCompactTrimmedStringArray(keyPrefix);
     
@@ -1816,17 +1799,15 @@ public class Config extends Properties {
 
     return null;
   }
-
-  public <T> ArrayList<T> getInstances(String key, Class<T> type) throws JPFConfigException {
+  public <MISSING> ArrayList<T> getInstances(String key, Class<T> type) throws JPFConfigException {
 
     Class<?>[] argTypes = { Config.class };
     Object[] args = { this };
 
     return getInstances(key,type,argTypes,args);
   }
-  
-  public <T> ArrayList<T> getInstances(String key, Class<T> type, Class<?>[]argTypes, Object[] args)
-                                                      throws JPFConfigException {
+  public <MISSING> ArrayList<T> getInstances(String key, Class<T> type, Class<?>[] argTypes, Object[] args)
+  throws JPFConfigException {
     Class<?>[] c = getClasses(key);
 
     if (c != null) {
@@ -1852,8 +1833,7 @@ public class Config extends Properties {
 
     return null;
   }
-  
-  public <T> T getInstance(String key, Class<T> type, String defClsName) throws JPFConfigException {
+  public <MISSING> T getInstance(String key, Class<T> type, String defClsName) throws JPFConfigException {
     Class<?>[] argTypes = CONFIG_ARGTYPES;
     Object[] args = CONFIG_ARGS;
 
@@ -1872,16 +1852,14 @@ public class Config extends Properties {
     
     return getInstance(key, cls, type, argTypes, args, id);
   }
-
-  public <T> T getInstance(String key, Class<T> type) throws JPFConfigException {
+  public <MISSING> T getInstance(String key, Class<T> type) throws JPFConfigException {
     Class<?>[] argTypes = CONFIG_ARGTYPES;
     Object[] args = CONFIG_ARGS;
 
     return getInstance(key, type, argTypes, args);
   }
-    
-  public <T> T getInstance(String key, Class<T> type, Class<?>[] argTypes,
-                            Object[] args) throws JPFConfigException {
+  public <MISSING> T getInstance(String key, Class<T> type, Class<?>[] argTypes, Object[] args)
+  throws JPFConfigException {
     Class<?> cls = getClass(key);
     String id = getIdPart(key);
 
@@ -1891,8 +1869,7 @@ public class Config extends Properties {
       return null;
     }
   }
-  
-  public <T> T getInstance(String key, Class<T> type, Object arg1, Object arg2)  throws JPFConfigException {
+  public <MISSING> T getInstance(String key, Class<T> type, Object arg1, Object arg2) throws JPFConfigException {
     Class<?>[] argTypes = new Class<?>[2];
     argTypes[0] = arg1.getClass();
     argTypes[1] = arg2.getClass();
@@ -1903,18 +1880,13 @@ public class Config extends Properties {
 
     return getInstance(key, type, argTypes, args);
   }
-
-
-  public <T> T getEssentialInstance(String key, Class<T> type) throws JPFConfigException {
+  public <MISSING> T getEssentialInstance(String key, Class<T> type) throws JPFConfigException {
     Class<?>[] argTypes = { Config.class };
     Object[] args = { this };
     return getEssentialInstance(key, type, argTypes, args);
   }
-
-  /**
-   * just a convenience method for ctor calls that take two arguments
-   */
-  public <T> T getEssentialInstance(String key, Class<T> type, Object arg1, Object arg2)  throws JPFConfigException {
+  public <MISSING> T getEssentialInstance(String key, Class<T> type, Object arg1, Object arg2)
+  throws JPFConfigException {
     Class<?>[] argTypes = new Class<?>[2];
     argTypes[0] = arg1.getClass();
     argTypes[1] = arg2.getClass();
@@ -1925,15 +1897,15 @@ public class Config extends Properties {
 
     return getEssentialInstance(key, type, argTypes, args);
   }
-
-  public <T> T getEssentialInstance(String key, Class<T> type, Class<?>[] argTypes, Object[] args) throws JPFConfigException {
+  public <MISSING> T getEssentialInstance(String key, Class<T> type, Class<?>[] argTypes, Object[] args)
+  throws JPFConfigException {
     Class<?> cls = getEssentialClass(key);
     String id = getIdPart(key);
 
     return getInstance(key, cls, type, argTypes, args, id);
   }
-
-  public <T> T getInstance (String id, String clsName, Class<T> type, Class<?>[] argTypes, Object[] args) throws JPFConfigException {
+  public <MISSING> T getInstance(String id, String clsName, Class<T> type, Class<?>[] argTypes, Object[] args)
+  throws JPFConfigException {
     Class<?> cls = asClass(clsName);
     
     if (cls != null) {
@@ -1942,8 +1914,7 @@ public class Config extends Properties {
       return null;
     }
   }
-  
-  public <T> T getInstance (String id, String clsName, Class<T> type) throws JPFConfigException {
+  public <MISSING> T getInstance(String id, String clsName, Class<T> type) throws JPFConfigException {
     Class<?>[] argTypes = CONFIG_ARGTYPES;
     Object[] args = CONFIG_ARGS;
 
@@ -1955,15 +1926,8 @@ public class Config extends Properties {
       return null;
     }
   }
-  
-  /**
-   * this is our private instantiation workhorse - try to instantiate an object of
-   * class 'cls' by using the following ordered set of ctors 1. <cls>(
-   * <argTypes>) 2. <cls>(Config) 3. <cls>() if all of that fails, or there was
-   * a 'type' provided the instantiated object does not comply with, return null
-   */
-  <T> T getInstance(String key, Class<?> cls, Class<T> type, Class<?>[] argTypes,
-                     Object[] args, String id) throws JPFConfigException {
+  <MISSING> T getInstance(String key, Class<?> cls, Class<T> type, Class<?>[] argTypes, Object[] args, String id)
+  throws JPFConfigException {
     Object o = null;
     Constructor<?> ctor = null;
 
@@ -2462,7 +2426,7 @@ public class Config extends Properties {
         log.config("configuration source " + idx++ + " : " + getSourceName(src));
       }
     }
+
+
   }
-
-
-}
+  

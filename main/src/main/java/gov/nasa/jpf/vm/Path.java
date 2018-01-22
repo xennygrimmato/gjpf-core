@@ -74,7 +74,7 @@ public class Path implements Printable, Iterable<Transition>, Cloneable {
   }
 
   public boolean isEmpty() {
-    return (stack.size() == 0);
+    return (stack.isEmpty());
   }
   
   public int size () {
@@ -131,4 +131,5 @@ public class Path implements Printable, Iterable<Transition>, Cloneable {
   public Iterator<Transition> descendingIterator() {
     return stack.descendingIterator();
   }
+  
 }

@@ -812,7 +812,7 @@ public abstract class TestJPF implements JPFShell  {
     }
 
     List<Error> errors = jpf.getSearchErrors();
-    if ((errors != null) && (errors.size() > 0)) {
+    if ((errors != null) && (!errors.isEmpty())) {
       fail("JPF found unexpected errors: " + (errors.get(0)).getDescription());
     }
 
@@ -1178,4 +1178,5 @@ public abstract class TestJPF implements JPFShell  {
   public static void assertTrue (boolean cond){
     assertTrue("", cond);
   }
+  
 }
